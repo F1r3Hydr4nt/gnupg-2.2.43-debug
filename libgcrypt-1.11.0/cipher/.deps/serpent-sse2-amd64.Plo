@@ -1,0 +1,7 @@
+serpent-sse2-amd64.lo: serpent-sse2-amd64.S /usr/include/stdc-predef.h \
+ ../config.h /usr/lib/gcc/x86_64-linux-gnu/11/include/cet.h \
+ asm-common-amd64.h
+/usr/include/stdc-predef.h:
+../config.h:
+/usr/lib/gcc/x86_64-linux-gnu/11/include/cet.h:
+asm-common-amd64.h:

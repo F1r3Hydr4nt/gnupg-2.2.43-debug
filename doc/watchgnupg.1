@@ -1,0 +1,129 @@
+.\" Created from Texinfo source by yat2m 1.50
+.TH WATCHGNUPG 1 2024-03-04 "GnuPG 2.2.43" "GNU Privacy Guard 2.2"
+.SH NAME
+.B watchgnupg
+\- Read and print logs from a socket
+.SH SYNOPSIS
+.B  watchgnupg
+.RB [ \-\-force ]
+.RB [ \-\-verbose ]
+.I socketname
+
+.SH DESCRIPTION
+Most of the main utilities are able to write their log files to a Unix
+Domain socket if configured that way.  \fBwatchgnupg\fP is a simple
+listener for such a socket.  It ameliorates the output with a time stamp
+and makes sure that long lines are not interspersed with log output from
+other utilities.  This tool is not available for Windows.
+
+
+
+\fBwatchgnupg\fP is commonly invoked as
+
+.RS 2
+.nf
+watchgnupg \-\-force $(gpgconf \-\-list\-dirs socketdir)/S.log
+
+.SH OPTIONS
+
+\fBwatchgnupg\fP understands these options:
+
+
+.TP
+.B  \-\-force
+Delete an already existing socket file.
+
+
+.TP
+.B  \-\-tcp \fIn\fP
+Instead of reading from a local socket, listen for connects on TCP port
+\fIn\fP.
+
+.TP
+.B  \-\-time\-only
+Do not print the date part of the timestamp.
+
+.TP
+.B  \-\-verbose
+Enable extra informational output.
+
+.TP
+.B  \-\-version
+Print version of the program and exit.
+
+.TP
+.B  \-\-help
+Display a brief help page and exit.
+
+.P
+
+
+.SH EXAMPLES
+
+.RS 2
+.nf
+$ watchgnupg \-\-force \-\-time\-only $(gpgconf \-\-list\-dirs socketdir)/S.log
+.fi
+.RE
+
+This waits for connections on the local socket
+(e.g. \(oq\fI/home/foo/.gnupg/S.log\fP\(cq) and shows all log entries.  To
+make this work the option \fBlog\-file\fP needs to be used with all
+modules which logs are to be shown.  The suggested entry for the
+configuration files is:
+
+.RS 2
+.nf
+log\-file socket://
+.fi
+.RE
+
+If the default socket as given above and returned by "echo $(gpgconf
+\[en]list-dirs socketdir)/S.log" is not desired an arbitrary socket name
+can be specified, for example \(oq\fIsocket:///home/foo/bar/mysocket\fP\(cq.
+For debugging purposes it is also possible to do remote logging.  Take
+care if you use this feature because the information is send in the
+clear over the network.  Use this syntax in the conf files:
+
+.RS 2
+.nf
+log\-file tcp://192.168.1.1:4711
+.fi
+.RE
+
+You may use any port and not just 4711 as shown above; only IP
+addresses are supported (v4 and v6) and no host names.  You need to
+start \fBwatchgnupg\fP with the \fBtcp\fP option.  Note that
+under Windows the registry entry
+\fIHKCU\[rs]Software\[rs]GNU\[rs]GnuPG:DefaultLogFile\fP can be used to change the
+default log output from \fBstderr\fP to whatever is given by that
+entry.  However the only useful entry is a TCP name for remote
+debugging.
+
+
+.SH SEE ALSO
+\fBgpg\fP(1),
+\fBgpgsm\fP(1),
+\fBgpg\-agent\fP(1),
+\fBscdaemon\fP(1)
+
+The full documentation for this tool is maintained as a Texinfo manual.
+If GnuPG and the info program are properly installed at your site, the
+command
+
+.RS 2
+.nf
+info gnupg
+.fi
+.RE
+
+should give you access to the complete manual including a menu structure
+and an index.
+
+
+
+
+
+
+
+

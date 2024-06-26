@@ -1,0 +1,6 @@
+{
+    "files.associations": {
+        "logging.h": "c",
+        "random": "c"
+    }
+}

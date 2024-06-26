@@ -1,0 +1,9 @@
+camellia-vaes-avx2-amd64.lo: camellia-vaes-avx2-amd64.S \
+ /usr/include/stdc-predef.h ../config.h \
+ /usr/lib/gcc/x86_64-linux-gnu/11/include/cet.h \
+ camellia-aesni-avx2-amd64.h asm-common-amd64.h
+/usr/include/stdc-predef.h:
+../config.h:
+/usr/lib/gcc/x86_64-linux-gnu/11/include/cet.h:
+camellia-aesni-avx2-amd64.h:
+asm-common-amd64.h:

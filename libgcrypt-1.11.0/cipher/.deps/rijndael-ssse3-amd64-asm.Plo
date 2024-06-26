@@ -1,0 +1,7 @@
+rijndael-ssse3-amd64-asm.lo: rijndael-ssse3-amd64-asm.S \
+ /usr/include/stdc-predef.h ../config.h \
+ /usr/lib/gcc/x86_64-linux-gnu/11/include/cet.h asm-common-amd64.h
+/usr/include/stdc-predef.h:
+../config.h:
+/usr/lib/gcc/x86_64-linux-gnu/11/include/cet.h:
+asm-common-amd64.h:

@@ -1,0 +1,3 @@
+rijndael-vaes-avx2-i386.lo: rijndael-vaes-avx2-i386.S \
+ /usr/include/stdc-predef.h
+/usr/include/stdc-predef.h:
