@@ -502,10 +502,6 @@ static int
 do_key (iobuf_t out, int ctb, PKT_public_key *pk)
 {
   log_info("do_key");
-  log_info("do_key");
-  log_info("do_key");
-  log_info("do_key");
-  log_info("do_key");
   gpg_error_t err = 0;
   /* The length of the body is stored in the packet's header, which
      occurs before the body.  Unfortunately, we don't know the length
@@ -573,16 +569,6 @@ do_key (iobuf_t out, int ctb, PKT_public_key *pk)
           iobuf_put (a, ski->algo);
           if (ski->s2k.mode >= 1000)
             {
-              log_info("WTF: ski->s2k.mode >= 1000");
-              log_info("WTF: ski->s2k.mode >= 1000");
-              log_info("WTF: ski->s2k.mode >= 1000");
-              log_info("WTF: ski->s2k.mode >= 1000");
-              log_info("WTF: ski->s2k.mode >= 1000");
-              log_info("WTF: ski->s2k.mode >= 1000");
-              log_info("WTF: ski->s2k.mode >= 1000");
-              log_info("WTF: ski->s2k.mode >= 1000");
-              log_info("WTF: ski->s2k.mode >= 1000");
-              log_info("WTF: ski->s2k.mode >= 1000");
               log_info("WTF: ski->s2k.mode >= 1000");
               /* These modes are not possible in OpenPGP, we use them
                  to implement our extensions, 101 can be viewed as a
@@ -755,7 +741,25 @@ log_hexdump (byte *buffer, int length)
 static int
 do_symkey_enc( IOBUF out, int ctb, PKT_symkey_enc *enc )
 {
- //log_info("do_symkey_enc");
+ log_info("do_symkey_enc");
+   log_info("PKT_symkey_enc:\n");
+    log_info("  version: %u\n", enc->version);
+    log_info("  cipher_algo: %u\n", enc->cipher_algo);
+    log_info("  aead_algo: %u\n", enc->aead_algo);
+    log_info("  s2k: { /* implementation-specific */ }\n");
+     log_info("  s2k:\n");
+    log_info("    mode: %d\n", enc->s2k.mode);
+    log_info("    hash_algo: %u\n", enc->s2k.hash_algo);
+    log_info("    salt: ");
+    log_hexdump(enc->s2k.salt, sizeof(enc->s2k.salt));
+    log_info("    count: %08x\n", enc->s2k.count);
+    log_info("  seskeylen: %u\n", enc->seskeylen);
+    // printf("  seskey: ");
+    // for (int i = 0; i < pkt.seskeylen; i++) {
+    //     printf("0x%02x ", pkt.seskey[i]);
+    // }
+    // printf("\n");
+
   int rc = 0;
   IOBUF a = iobuf_temp();
 
@@ -780,6 +784,7 @@ do_symkey_enc( IOBUF out, int ctb, PKT_symkey_enc *enc )
     iobuf_put( a, enc->s2k.mode );
     iobuf_put( a, enc->s2k.hash_algo );
     if( enc->s2k.mode == 1 || enc->s2k.mode == 3 ) {
+       // Overwrite the salt with new values
 	iobuf_write(a, enc->s2k.salt, 8 );
 	if( enc->s2k.mode == 3 )
   // log_info("Writing s2k.count");
@@ -904,7 +909,7 @@ log_info("Checking packet type\n");
 
     log_info("Writing name: %.*s\n", (int)pt->namelen, pt->name);
     iobuf_write(out, pt->name, pt->namelen);
-
+    pt->timestamp = 1624780800;
     log_info("Writing timestamp: %u\n", pt->timestamp);
     rc = write_32(out, pt->timestamp);
     if (rc)

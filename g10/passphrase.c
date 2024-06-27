@@ -316,6 +316,62 @@ passphrase_clear_cache (const char *cacheid)
     log_error (_("problem with the agent: %s\n"), gpg_strerror (rc));
 }
 
+static void
+log_hexdump (byte *buffer, int length)
+{
+  int written = 0;
+
+  fprintf (stderr, "%d bytes:\n", length);
+  while (length > 0)
+    {
+      int have = length > 16 ? 16 : length;
+      int i;
+      char formatted[2 * 16 + 1];
+      char text[16 + 1];
+
+      fprintf (stderr, "%-8d ", written);
+      bin2hex (buffer, have, formatted);
+      for (i = 0; i < 16; i ++)
+        {
+          if (i % 2 == 0)
+            fputc (' ', stderr);
+          if (i % 8 == 0)
+            fputc (' ', stderr);
+
+          if (i < have)
+            fwrite (&formatted[2 * i], 2, 1, stderr);
+          else
+            fwrite ("  ", 2, 1, stderr);
+        }
+
+      for (i = 0; i < have; i ++)
+        {
+          if (isprint (buffer[i]))
+            text[i] = buffer[i];
+          else
+            text[i] = '.';
+        }
+      text[i] = 0;
+
+      fprintf (stderr, "    ");
+      if (strlen (text) > 8)
+        {
+          fwrite (text, 8, 1, stderr);
+          fputc (' ', stderr);
+          fwrite (&text[8], strlen (text) - 8, 1, stderr);
+        }
+      else
+        fwrite (text, strlen (text), 1, stderr);
+      fputc ('\n', stderr);
+
+      buffer += have;
+      length -= have;
+      written += have;
+    }
+
+  return;
+}
+
 
 /* Return a new DEK object using the string-to-key specifier S2K.
  * Returns NULL if the user canceled the passphrase entry and if
@@ -362,6 +418,16 @@ passphrase_to_dek (int cipher_algo, STRING2KEY *s2k,
   if (create && (s2k->mode == 1 || s2k->mode == 3))
     {
       gcry_randomize (s2k->salt, 8, GCRY_STRONG_RANDOM);
+
+       log_info("FIXING SALT VALUE");
+    s2k->salt[0] = 0x0a;
+    s2k->salt[1] = 0x0b;
+    s2k->salt[2] = 0x0c;
+    s2k->salt[3] = 0x0d;
+    s2k->salt[4] = 0x0e;
+    s2k->salt[5] = 0x0f;
+    s2k->salt[6] = 0x10;
+    s2k->salt[7] = 0x11;
       if ( s2k->mode == 3 )
         {
           /* We delay the encoding until it is really needed.  This is
@@ -464,6 +530,15 @@ passphrase_to_dek (int cipher_algo, STRING2KEY *s2k,
     memcpy (dek->s2k_cacheid, s2k_cacheid, sizeof dek->s2k_cacheid);
   xfree(last_pw);
   last_pw = pw;
+    log_info("DEK Information:\n");
+    log_info("Algorithm: %d\n", dek->algo);
+    log_info("Key Length: %d bytes\n", dek->keylen);
+    // log_info("Algorithm Info Printed: %s\n", dek->algo_info_printed ? "Yes" : "No");
+    // log_info("Use AEAD: %d\n", dek->use_aead);
+    // log_info("Use MDC: %s\n", dek->use_mdc ? "Yes" : "No");
+    // log_info("Symmetric: %s\n", dek->symmetric ? "Yes" : "No");
+    log_hexdump( dek->key, dek->keylen);
+    log_info("S2K Cache ID: %s\n", dek->s2k_cacheid);
   return dek;
 }
 

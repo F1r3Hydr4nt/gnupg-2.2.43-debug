@@ -351,7 +351,7 @@ void print_iobuf_info(const struct iobuf_struct *iobuf) {
 static int
 encrypt_simple (const char *filename, int mode, int use_seskey)
 {
-  // log_info("encrypt_simple");
+  log_info("encrypt_simple");
   iobuf_t inp, out;
   PACKET pkt;
   PKT_plaintext *pt = NULL;
@@ -649,6 +649,7 @@ encrypt_simple (const char *filename, int mode, int use_seskey)
 gpg_error_t
 setup_symkey (STRING2KEY **symkey_s2k, DEK **symkey_dek)
 {
+  log_info("setup_symkey");
   int canceled;
   int defcipher;
   int s2kdigest;
@@ -678,6 +679,7 @@ setup_symkey (STRING2KEY **symkey_s2k, DEK **symkey_dek)
 
   *symkey_dek = passphrase_to_dek (defcipher,
                                    *symkey_s2k, 1, 0, NULL, 0, &canceled);
+                                   
   if (!*symkey_dek || !(*symkey_dek)->keylen)
     {
       xfree(*symkey_dek);
