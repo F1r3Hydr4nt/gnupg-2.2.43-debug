@@ -114,7 +114,62 @@ log_hexdump (byte *buffer, int length)
 
   return;
 }
+// From 1.4.16
+/*
+static void
+write_header( cipher_filter_context_t *cfx, IOBUF a )
+{
+    PACKET pkt;
+    PKT_encrypted ed;
+    byte temp[18];
+    unsigned blocksize;
+    unsigned nprefix;
 
+    blocksize = cipher_get_blocksize( cfx->dek->algo );
+    if( blocksize < 8 || blocksize > 16 )
+	log_fatal("unsupported blocksize %u\n", blocksize );
+
+    memset( &ed, 0, sizeof ed );
+    ed.len = cfx->datalen;
+    ed.extralen = blocksize+2;
+    ed.new_ctb = !ed.len && !RFC1991;
+    if( cfx->dek->use_mdc ) {
+	ed.mdc_method = DIGEST_ALGO_SHA1;
+	cfx->mdc_hash = md_open( DIGEST_ALGO_SHA1, 0 );
+	if ( DBG_HASHING )
+	    md_start_debug( cfx->mdc_hash, "creatmdc" );
+    }
+
+    {
+        char buf[20];
+        
+        sprintf (buf, "%d %d", ed.mdc_method, cfx->dek->algo);
+        write_status_text (STATUS_BEGIN_ENCRYPTION, buf);
+    }
+
+    init_packet( &pkt );
+    pkt.pkttype = cfx->dek->use_mdc? PKT_ENCRYPTED_MDC : PKT_ENCRYPTED;
+    pkt.pkt.encrypted = &ed;
+    if( build_packet( a, &pkt ))
+	log_bug("build_packet(ENCR_DATA) failed\n");
+    nprefix = blocksize;
+    randomize_buffer( temp, nprefix, 1 );
+    temp[nprefix] = temp[nprefix-2];
+    temp[nprefix+1] = temp[nprefix-1];
+    print_cipher_algo_note( cfx->dek->algo );
+    cfx->cipher_hd = cipher_open( cfx->dek->algo,
+				  cfx->dek->use_mdc? CIPHER_MODE_CFB
+					 : CIPHER_MODE_AUTO_CFB, 1 );
+    cipher_setkey( cfx->cipher_hd, cfx->dek->key, cfx->dek->keylen );
+    cipher_setiv( cfx->cipher_hd, NULL, 0 );
+    if( cfx->mdc_hash ) // hash the "IV" /
+	md_write( cfx->mdc_hash, temp, nprefix+2 );
+    cipher_encrypt( cfx->cipher_hd, temp, temp, nprefix+2);
+    cipher_sync( cfx->cipher_hd );
+    iobuf_write(a, temp, nprefix+2);
+    cfx->header=1;
+}
+*/
 static void
 write_cfb_header (cipher_filter_context_t *cfx, iobuf_t a)
 {
@@ -163,7 +218,7 @@ write_cfb_header (cipher_filter_context_t *cfx, iobuf_t a)
 memcpy(temp, fixed_random, nprefix);
   temp[nprefix] = temp[nprefix-2];
   temp[nprefix+1] = temp[nprefix-1];
-    log_printhex (temp, nprefix, "RANDOM:");
+    log_printhex (temp, nprefix+2, "RANDOM:");
   print_cipher_algo_note (cfx->dek->algo);
   err = openpgp_cipher_open (&cfx->cipher_hd,
                              cfx->dek->algo,
@@ -181,11 +236,14 @@ memcpy(temp, fixed_random, nprefix);
   gcry_cipher_setkey (cfx->cipher_hd, cfx->dek->key, cfx->dek->keylen);
   gcry_cipher_setiv (cfx->cipher_hd, NULL, 0);
 
-    log_printhex (temp, nprefix+2, "IV:");
+    log_printhex (cfx->startiv, nprefix+2, "IV:");
   if (cfx->mdc_hash) /* Hash the "IV". */{
     log_info("Hashing IV\n");
     gcry_md_write (cfx->mdc_hash, temp, nprefix+2 );
   }
+
+      log_info("Encrypting: %d bytes\n", nprefix+2);
+    log_printhex (temp, nprefix+2, "TO ENCRYPT:");
   gcry_cipher_encrypt (cfx->cipher_hd, temp, nprefix+2, NULL, 0);
   // log_info("TEMP:");
     log_printhex (temp, nprefix+2, "ENCRYPTED:");
@@ -232,8 +290,9 @@ cipher_filter_cfb (void *opaque, int control,
         log_info("Hashing mdc_hash\n");
         gcry_md_write (cfx->mdc_hash, buf, size);
       }
-      log_info("Encrypting %d bytes\n", size);
-      log_hexdump(buf, size);
+      log_info("Encrypting: %d bytes\n", size);
+          log_printhex (buf, size, "TO ENCRYPT:");
+
       gcry_cipher_encrypt (cfx->cipher_hd, buf, size, NULL, 0);
       if (cfx->short_blklen_warn)
         {
@@ -271,6 +330,9 @@ cipher_filter_cfb (void *opaque, int control,
           gcry_md_final (cfx->mdc_hash);
           hash = gcry_md_read (cfx->mdc_hash, 0);
           memcpy(temp+2, hash, 20);
+          log_info("Encrypting: %d bytes\n", 22);
+          log_printhex (temp, 22, "TO ENCRYPT:");
+
           gcry_cipher_encrypt (cfx->cipher_hd, temp, 22, NULL, 0);
           gcry_md_close (cfx->mdc_hash); cfx->mdc_hash = NULL;
           if (iobuf_write( a, temp, 22))

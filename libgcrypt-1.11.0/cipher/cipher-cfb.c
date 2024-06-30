@@ -29,6 +29,13 @@
 #include "bufhelp.h"
 #include "./cipher-internal.h"
 
+void logBuffer(const unsigned char *buffer, size_t length) {
+    // log_printf("Buffer: ");
+    for (size_t i = 0; i < length; i++) {
+        log_printf("%02x ", buffer[i]);
+    }
+    log_printf("\n");
+}
 
 gcry_err_code_t
 _gcry_cipher_cfb_encrypt (gcry_cipher_hd_t c,
@@ -47,12 +54,18 @@ _gcry_cipher_cfb_encrypt (gcry_cipher_hd_t c,
     return GPG_ERR_BUFFER_TOO_SHORT;
 
   if ( inbuflen <= c->unused )
-    {
+    {  
+      log_info("_gcry_cipher_cfb_encrypt 1 %d %d\n",inbuflen,outbuflen);
+
       /* Short enough to be encoded by the remaining XOR mask. */
       /* XOR the input with the IV and store input into IV. */
       ivp = c->u_iv.iv + blocksize - c->unused;
       buf_xor_2dst(outbuf, ivp, inbuf, inbuflen);
       c->unused -= inbuflen;
+
+        // log_printhex(c->u_iv.iv, blocksize, "IV: ");
+        // log_printhex(inbuf, inbuflen, "Input: ");
+        // log_printhex(outbuf, inbuflen, "Output: ");
       return 0;
     }
 
@@ -60,10 +73,17 @@ _gcry_cipher_cfb_encrypt (gcry_cipher_hd_t c,
 
   if ( c->unused )
     {
+      log_info("_gcry_cipher_cfb_encrypt 2 %d %d\n",inbuflen,outbuflen);
       /* XOR the input with the IV and store input into IV */
       inbuflen -= c->unused;
       ivp = c->u_iv.iv + blocksize - c->unused;
       buf_xor_2dst(outbuf, ivp, inbuf, c->unused);
+
+      log_info("outbuf: ");
+      logBuffer(outbuf, c->unused);
+        // log_printhex(c->u_iv.iv, blocksize, "IV: ");
+        // log_printhex(inbuf, inbuflen, "Input: ");
+        // log_printhex(outbuf, inbuflen, "Output: ");
       outbuf += c->unused;
       inbuf += c->unused;
       c->unused = 0;
@@ -74,8 +94,13 @@ _gcry_cipher_cfb_encrypt (gcry_cipher_hd_t c,
      also allows to use a bulk encryption function if available.  */
   if (inbuflen >= blocksize_x_2 && c->bulk.cfb_enc)
     {
+      log_info("_gcry_cipher_cfb_encrypt 3 %d %d\n",inbuflen,outbuflen);
       size_t nblocks = inbuflen >> blocksize_shift;
       c->bulk.cfb_enc (&c->context.c, c->u_iv.iv, outbuf, inbuf, nblocks);
+
+        // log_printhex(c->u_iv.iv, blocksize, "IV: ");
+        // log_printhex(inbuf, inbuflen, "Input: ");
+        // log_printhex(outbuf, inbuflen, "Output: ");
       outbuf += nblocks << blocksize_shift;
       inbuf  += nblocks << blocksize_shift;
       inbuflen -= nblocks << blocksize_shift;
@@ -84,11 +109,16 @@ _gcry_cipher_cfb_encrypt (gcry_cipher_hd_t c,
     {
       while ( inbuflen >= blocksize_x_2 )
         {
+      log_info("_gcry_cipher_cfb_encrypt 4 %d %d\n",inbuflen,outbuflen);
           /* Encrypt the IV. */
           nburn = enc_fn ( &c->context.c, c->u_iv.iv, c->u_iv.iv );
           burn = nburn > burn ? nburn : burn;
           /* XOR the input with the IV and store input into IV.  */
           cipher_block_xor_2dst(outbuf, c->u_iv.iv, inbuf, blocksize);
+
+        // log_printhex(c->u_iv.iv, blocksize, "IV: ");
+        // log_printhex(inbuf, inbuflen, "Input: ");
+        // log_printhex(outbuf, inbuflen, "Output: ");
           outbuf += blocksize;
           inbuf += blocksize;
           inbuflen -= blocksize;
@@ -97,26 +127,52 @@ _gcry_cipher_cfb_encrypt (gcry_cipher_hd_t c,
 
   if ( inbuflen >= blocksize )
     {
+      log_info("_gcry_cipher_cfb_encrypt 5 %d %d\n",inbuflen,outbuflen);
+      log_info("inbuf: ");
+      logBuffer(inbuf, inbuflen);
       /* Save the current IV and then encrypt the IV. */
+      log_info("c->u_iv.iv: ");
+      logBuffer(c->u_iv.iv, blocksize);
       cipher_block_cpy( c->lastiv, c->u_iv.iv, blocksize );
+
       nburn = enc_fn ( &c->context.c, c->u_iv.iv, c->u_iv.iv );
+      log_info("c->u_iv.iv encrypted: ");
+      logBuffer(c->u_iv.iv, blocksize);
+      log_info("burn: %d, nburn: %d",burn,nburn);
       burn = nburn > burn ? nburn : burn;
       /* XOR the input with the IV and store input into IV */
       cipher_block_xor_2dst(outbuf, c->u_iv.iv, inbuf, blocksize);
+
+      // log_info("c->u_iv.iv xored: ");
+      // logBuffer(c->u_iv.iv, blocksize);
+      log_info("outbuf: ");
+      logBuffer(outbuf, blocksize);
+        // log_printhex(c->u_iv.iv, blocksize, "IV: ");
+        // log_printhex(inbuf, inbuflen, "Input: ");
+        // log_printhex(outbuf, inbuflen, "Output: ");
       outbuf += blocksize;
       inbuf += blocksize;
       inbuflen -= blocksize;
     }
   if ( inbuflen )
     {
+      log_info("_gcry_cipher_cfb_encrypt 6 %d %d\n",inbuflen,outbuflen);
       /* Save the current IV and then encrypt the IV. */
       cipher_block_cpy( c->lastiv, c->u_iv.iv, blocksize );
       nburn = enc_fn ( &c->context.c, c->u_iv.iv, c->u_iv.iv );
+      log_info("c->u_iv.iv encrypted: ");
+      logBuffer(c->u_iv.iv, blocksize);
       burn = nburn > burn ? nburn : burn;
       c->unused = blocksize;
       /* Apply the XOR. */
       c->unused -= inbuflen;
       buf_xor_2dst(outbuf, c->u_iv.iv, inbuf, inbuflen);
+
+      log_info("outbuf: ");
+      logBuffer(outbuf, inbuflen);
+        // log_printhex(c->u_iv.iv, blocksize, "IV: ");
+        // log_printhex(inbuf, inbuflen, "Input: ");
+        // log_printhex(outbuf, inbuflen, "Output: ");
       outbuf += inbuflen;
       inbuf += inbuflen;
       inbuflen = 0;
