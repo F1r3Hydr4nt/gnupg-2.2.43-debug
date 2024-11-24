@@ -258,4 +258,5 @@
 # End:
 
 
-echo "Hello World!" | ./g10/gpg --symmetric --cipher-algo CAST5 --passphrase "password" --s2k-digest-algo SHA1 --compress-algo none --batch --rfc2440 --verbose > encrypted.gpg
+echo "Hello World!" | ./g10/gpg --symmetric --cipher-algo CAST5 --passphrase "password" --s2k-digest-algo SHA1 --compress-algo none --batch --rfc2440 --verbose > encrypted.gpg && cat encrypted.gpg | xxd -p
+
