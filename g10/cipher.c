@@ -270,7 +270,7 @@ int
 cipher_filter_cfb (void *opaque, int control,
                    iobuf_t a, byte *buf, size_t *ret_len)
 {
-  // log_info("cipher_filter_cfb\n");
+  log_info("cipher_filter_cfb\n");
   cipher_filter_context_t *cfx = opaque;
   size_t size = *ret_len;
   int rc = 0;
@@ -282,7 +282,7 @@ cipher_filter_cfb (void *opaque, int control,
     }
   else if (control == IOBUFCTRL_FLUSH) /* encrypt */
     {
-      // log_info("IOBUFCTRL_FLUSH\n");
+      log_info("IOBUFCTRL_FLUSH\n");
       log_assert (a);
       if (!cfx->wrote_header)
         write_cfb_header (cfx, a);
@@ -290,7 +290,7 @@ cipher_filter_cfb (void *opaque, int control,
         log_info("Hashing mdc_hash\n");
         gcry_md_write (cfx->mdc_hash, buf, size);
       }
-      log_info("Encrypting: %d bytes\n", size);
+      // log_info("Encrypting2: %d bytes\n", size);
           log_printhex (buf, size, "TO ENCRYPT:");
 
       gcry_cipher_encrypt (cfx->cipher_hd, buf, size, NULL, 0);
@@ -313,7 +313,7 @@ cipher_filter_cfb (void *opaque, int control,
     }
   else if (control == IOBUFCTRL_FREE)
     {
-      // log_info("IOBUFCTRL_FREE\n");
+      log_info("IOBUFCTRL_FREE\n");
       if (cfx->mdc_hash)
         {
           byte *hash;
@@ -330,7 +330,7 @@ cipher_filter_cfb (void *opaque, int control,
           gcry_md_final (cfx->mdc_hash);
           hash = gcry_md_read (cfx->mdc_hash, 0);
           memcpy(temp+2, hash, 20);
-          log_info("Encrypting: %d bytes\n", 22);
+          log_info("Encrypting3: %d bytes\n", 22);
           log_printhex (temp, 22, "TO ENCRYPT:");
 
           gcry_cipher_encrypt (cfx->cipher_hd, temp, 22, NULL, 0);

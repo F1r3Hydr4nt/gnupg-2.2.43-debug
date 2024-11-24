@@ -2268,7 +2268,7 @@ iobuf_writebyte (iobuf_t a, unsigned int c)
     }
   log_assert (a->d.len < a->d.size);
   a->d.buf[a->d.len++] = c;
-  log_printhex(a->d.buf,a->d.len,"iobuf_writebyte");
+  // log_printhex(a->d.buf,a->d.len,"iobuf_writebyte");
   // log_info("iobuf_write");
   // log_hexdump(a->d.buf,a->d.len);
   return 0;

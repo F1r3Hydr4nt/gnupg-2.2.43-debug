@@ -746,7 +746,6 @@ do_symkey_enc( IOBUF out, int ctb, PKT_symkey_enc *enc )
     log_info("  version: %u\n", enc->version);
     log_info("  cipher_algo: %u\n", enc->cipher_algo);
     log_info("  aead_algo: %u\n", enc->aead_algo);
-    log_info("  s2k: { /* implementation-specific */ }\n");
      log_info("  s2k:\n");
     log_info("    mode: %d\n", enc->s2k.mode);
     log_info("    hash_algo: %u\n", enc->s2k.hash_algo);
