@@ -539,6 +539,7 @@ encrypt_simple (const char *filename, int mode, int use_seskey)
 
   if ( !iobuf_is_pipe_filename (filename) && *filename && !opt.textmode )
     {
+      log_info("iobuf_is_pipe_filename");
       uint64_t tmpsize;
 
       tmpsize = iobuf_get_filelength(inp);
@@ -558,10 +559,10 @@ encrypt_simple (const char *filename, int mode, int use_seskey)
   else
     filesize = opt.set_filesize ? opt.set_filesize : 0; /* stdin */
 
-    // log_info("filesize %d",filesize);
+    log_info("filesize %d",filesize);
   if (!opt.no_literal)
     {
-    // log_info("no_literal");
+      log_info("no_literal");
       /* Note that PT has been initialized above in !no_literal mode.  */
       pt->timestamp = make_timestamp();
       pt->mode = opt.mimemode? 'm' : opt.textmode? 't' : 'b';
@@ -574,6 +575,7 @@ encrypt_simple (const char *filename, int mode, int use_seskey)
     }
   else
     {
+      log_info("opt.no_literal");
       cfx.datalen = filesize && !do_compress ? filesize : 0;
       pkt.pkttype = 0;
       pkt.pkt.generic = NULL;
@@ -582,7 +584,7 @@ encrypt_simple (const char *filename, int mode, int use_seskey)
     // log_info("cfx.datalen %d",cfx.datalen);
   /* Register the cipher filter. */
   if (mode){
-    // log_info("mode %d,cfx.dek->use_aead %d",mode,cfx.dek->use_aead);
+    log_info("mode %d,cfx.dek->use_aead %d",mode,cfx.dek->use_aead);
     iobuf_push_filter (out,
                        cfx.dek->use_aead? cipher_filter_ocb
                        /**/             : cipher_filter_cfb,
@@ -610,6 +612,7 @@ encrypt_simple (const char *filename, int mode, int use_seskey)
     }
   else
     {
+      log_info("no_literal copying plain data");
       /* User requested not to create a literal packet, so we copy the
          plain data.  */
       byte copy_buffer[4096];
@@ -619,10 +622,10 @@ encrypt_simple (const char *filename, int mode, int use_seskey)
           log_error ("copying input to output failed: %s\n",
                      gpg_strerror (rc) );
           break;
-        }
+        }else log_info("copied %d bytes",bytes_copied);
       wipememory (copy_buffer, 4096); /* burn buffer */
     }
-
+  log_info("rc %d",rc);
   /* Finish the stuff.  */
   iobuf_close (inp);
   if (rc)

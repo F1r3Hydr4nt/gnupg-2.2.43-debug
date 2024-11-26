@@ -260,3 +260,20 @@
 
 echo "Hello World!" | ./g10/gpg --symmetric --cipher-algo CAST5 --passphrase "password" --s2k-digest-algo SHA1 --compress-algo none --batch --rfc2440 --verbose > encrypted.gpg && cat encrypted.gpg | xxd -p
 
+cat encrypted.gpg | gpg --batch --no-tty --passphrase "password" --decrypt --ignore-mdc-error
+FUNC: main
+gpg: CAST5.CFB encrypted data
+gpg: encrypted with 1 passphrase
+gpg: _gcry_cipher_setup_mode_ops
+gpg: gcry_cipher_cfb_decrypt inbuflen 10 outbuflen 10
+gpg: cipher_sync
+gpg: gcry_cipher_cfb_decrypt inbuflen 21 outbuflen 21
+Hello World!
+gpg: WARNING: message was not integrity protected
+
+cat loremIpsum.1k.txt | ./g10/gpg --symmetric --cipher-algo CAST5 --passphrase "password" --s2k-digest-algo SHA1 --compress-algo none --batch --rfc2440 --verbose > encrypted.1k.gpg && cat encrypted.1k.gpg | xxd -p
+cat loremIpsum.100k.txt | ./g10/gpg --symmetric --cipher-algo CAST5 --passphrase "password" --s2k-digest-algo SHA1 --compress-algo none --batch --rfc2440 --verbose > encrypted.100k.gpg && cat encrypted.100k.gpg | xxd -p
+
+To C files:
+ xxd -i encrypted.100k.gpg > encrypted.100k.h
+ ...

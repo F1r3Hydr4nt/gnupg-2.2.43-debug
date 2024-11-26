@@ -2309,7 +2309,7 @@ iobuf_write (iobuf_t a, const void *buffer, unsigned int buflen)
 	}
     }
   while (buflen);
-      log_printhex (a->d.buf,a->d.len, "iobuf_write:");
+  log_info("iobuf_write: %d bytes\n", a->d.len);
 
   return 0;
 }

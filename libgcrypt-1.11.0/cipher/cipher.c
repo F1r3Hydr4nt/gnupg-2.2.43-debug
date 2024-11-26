@@ -1265,7 +1265,7 @@ gcry_err_code_t
 _gcry_cipher_encrypt (gcry_cipher_hd_t h, void *out, size_t outsize,
                       const void *in, size_t inlen)
 {
-  // log_info("_gcry_cipher_encrypt inlen: %d, outSize: %d", inlen, outsize);
+  log_info("_gcry_cipher_encrypt inlen: %d, outSize: %d", inlen, outsize);
   gcry_err_code_t rc;
 
   if (!in)  /* Caller requested in-place encryption.  */
