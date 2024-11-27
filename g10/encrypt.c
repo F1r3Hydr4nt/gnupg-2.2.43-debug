@@ -572,6 +572,8 @@ encrypt_simple (const char *filename, int mode, int use_seskey)
       pkt.pkttype = PKT_PLAINTEXT;
       pkt.pkt.plaintext = pt;
       cfx.datalen = filesize && !do_compress ? calc_packet_length( &pkt ) : 0;
+            log_info("cfx.datalen %d",cfx.datalen);
+
     }
   else
     {
@@ -604,11 +606,13 @@ encrypt_simple (const char *filename, int mode, int use_seskey)
   /* Do the work. */
   if (!opt.no_literal)
     {
-
+log_info("opt.no_literal");
       if ( (rc = build_packet( out, &pkt )) )
         log_error("build_packet failed: %s\n", gpg_strerror (rc) );
 
-      // print_iobuf_info(out);
+        
+        
+        //print_iobuf_info(out);
     }
   else
     {

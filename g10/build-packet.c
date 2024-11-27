@@ -63,7 +63,9 @@ ctb_new_format_p (int ctb)
   /* Bit 7 must always be set.  */
   log_assert ((ctb & (1 << 7)));
   /* Bit 6 indicates whether the packet is a new format packet.  */
-  return (ctb & (1 << 6));
+  int res = (ctb & (1 << 6));
+  log_info("ctb new format: %d\n", res);
+  return res;
 }
 
 /* Extract the packet type from a CTB.  */
@@ -862,8 +864,9 @@ calc_plaintext( PKT_plaintext *pt )
 
   if(pt->namelen>255)
     pt->namelen=255;
-
-  return pt->len? (1 + 1 + pt->namelen + 4 + pt->len) : 0;
+  u32 res = pt->len? (1 + 1 + pt->namelen + 4 + pt->len) : 0;
+  log_info("calc_plaintext write_32 %08x",res);
+  return res;
 }
 
 /* Serialize the plaintext packet (RFC 4880, 5.9) described by PT and
@@ -896,6 +899,7 @@ log_info("Checking packet type\n");
     
 
     write_header(out, ctb, calc_plaintext( pt ) );
+    log_info("CTB: %d\n", ctb);
     log_info("Checking mode validity: mode = %c\n", pt->mode);
     log_assert(pt->mode == 'b' || pt->mode == 't' || pt->mode == 'u'
                 || pt->mode == 'm' || pt->mode == 'l' || pt->mode == '1');
@@ -917,15 +921,20 @@ log_info("Checking packet type\n");
     if (pt->buf)
       {
         nbytes = iobuf_copy (out, pt->buf);
+        log_info("!!!!! Wrote buf %d bytes", nbytes);
+        // log_printhex("Writing buf", pt->buf, pt->len);
+        
         if (nbytes == (size_t)(-1)
             && (iobuf_error (out) || iobuf_error (pt->buf)))
             return iobuf_error (out)? iobuf_error (out):iobuf_error (pt->buf);
         /* Always get the error to catch write errors because
          * iobuf_copy does not reliable return (-1) in that case.  */
         rc = iobuf_error (out);
-        if(ctb_new_format_p (ctb) && !pt->len)
+        if(ctb_new_format_p (ctb) && !pt->len){
           /* Turn off partial body length mode.  */
           iobuf_set_partial_body_length_mode (out, 0);
+          log_info("Turned off partial body length mode\n");
+        }
         if (pt->len && nbytes != pt->len)
           {
             log_error ("do_plaintext(): wrote %lu bytes"
@@ -935,7 +944,7 @@ log_info("Checking packet type\n");
               rc = gpg_error (GPG_ERR_EIO);
           }
       }
-
+    log_info("do_plaintext done %d\n", rc);
     return rc;
 }
 
@@ -1903,9 +1912,11 @@ static int
 write_header2( IOBUF out, int ctb, u32 len, int hdrlen )
 {
 
-  log_info("write_header2  %08X %02X",len,ctb);
-  if (ctb_new_format_p (ctb))
+  log_info("write_header2  %08X %d %02X",len,hdrlen,ctb);
+  if (ctb_new_format_p (ctb)){
+    log_info("writing_new_header\n");
     return write_new_header( out, ctb, len, hdrlen );
+  }
 
   /* An old format packet.  Refer to RFC 4880, Section 4.2.1 to
      understand how lengths are encoded in this case.  */
@@ -2004,9 +2015,11 @@ write_new_header( IOBUF out, int ctb, u32 len, int hdrlen )
     if( iobuf_put(out, ctb ) )
 	return -1;
     if( !len ) {
+  log_info("enable partial body length mode\n");
 	iobuf_set_partial_body_length_mode(out, 512 );
     }
     else {
+      log_info("len=%d\n",len);
 	if( len < 192 ) {
 	    if( iobuf_put(out, len ) )
 		return -1;

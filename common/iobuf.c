@@ -862,6 +862,7 @@ static int
 block_filter (void *opaque, int control, iobuf_t chain, byte * buffer,
 	      size_t * ret_len)
 {
+  log_info ("block_filter %d\n",control);
   block_filter_ctx_t *a = opaque;
   char *buf = (char *)buffer;
   size_t size = *ret_len;
@@ -1756,6 +1757,7 @@ iobuf_pop_filter (iobuf_t a, int (*f) (void *opaque, int control,
                                        iobuf_t chain, byte * buf, size_t * len),
                   void *ov)
 {
+  log_info("iobuf_pop_filter %d %d",a->nbytes);
   iobuf_t b;
   size_t dummy_len = 0;
   int rc = 0;
@@ -1776,6 +1778,7 @@ iobuf_pop_filter (iobuf_t a, int (*f) (void *opaque, int control,
       log_assert (b);
       xfree (a->d.buf);
       xfree (a->real_fname);
+      log_info ("iobuf_pop_filter: no filter %d\n",sizeof *a);
       memcpy (a, b, sizeof *a);
       xfree (b);
       return 0;
@@ -1820,6 +1823,7 @@ iobuf_pop_filter (iobuf_t a, int (*f) (void *opaque, int control,
       xfree (a->real_fname);
       memcpy (a, b, sizeof *a);
       xfree (b);
+      log_info ("iobuf_pop_filter: removed first filter %d\n",sizeof *a);
       if (DBG_IOBUF)
 	log_debug ("iobuf-%d.%d: popped filter\n", a->no, a->subno);
     }
@@ -2636,13 +2640,15 @@ iobuf_get_fname_nonnull (iobuf_t a)
 void
 iobuf_set_partial_body_length_mode (iobuf_t a, size_t len)
 {
+  log_info ("iobuf_set_partial_body_length_mode %d\n", len);
   if (!len)
     /* Disable partial body length mode.  */
     {
       if (a->use == IOBUF_INPUT)
-	log_debug ("iobuf_pop_filter called in set_partial_block_mode"
+	log_info ("iobuf_pop_filter called in set_partial_block_mode"
 		   " - please report\n");
-
+      
+      log_info ("iobuf_pop_filter called in set_partial_block_mode");
       log_assert (a->filter == block_filter);
       iobuf_pop_filter (a, block_filter, NULL);
     }
@@ -2654,6 +2660,8 @@ iobuf_set_partial_body_length_mode (iobuf_t a, size_t len)
       ctx->partial = 1;
       ctx->size = 0;
       ctx->first_c = len;
+      
+      log_info ("pushing partial block filter %d\n", ctx->use);
       iobuf_push_filter (a, block_filter, ctx);
     }
 }

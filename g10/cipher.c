@@ -173,6 +173,7 @@ write_header( cipher_filter_context_t *cfx, IOBUF a )
 static void
 write_cfb_header (cipher_filter_context_t *cfx, iobuf_t a)
 {
+  log_info ("write_cfb_header\n");
   gcry_error_t err;
   PACKET pkt;
   PKT_encrypted ed;
@@ -195,7 +196,7 @@ write_cfb_header (cipher_filter_context_t *cfx, iobuf_t a)
       if (DBG_HASHING)
         gcry_md_debug (cfx->mdc_hash, "creatmdc");
     }
-  else
+  else{}
     /*
       log_info (_("WARNING: "
                   "encrypting without integrity protection is dangerous\n"));
@@ -206,7 +207,7 @@ write_cfb_header (cipher_filter_context_t *cfx, iobuf_t a)
                        ed.mdc_method, cfx->dek->algo);
 
   init_packet (&pkt);
-  // log_info("use_mdc %d", cfx->dek->use_mdc);
+  log_info("use_mdc %d", cfx->dek->use_mdc);
   pkt.pkttype = cfx->dek->use_mdc? PKT_ENCRYPTED_MDC : PKT_ENCRYPTED;
   pkt.pkt.encrypted = &ed;
   if (build_packet( a, &pkt))
@@ -270,11 +271,11 @@ int
 cipher_filter_cfb (void *opaque, int control,
                    iobuf_t a, byte *buf, size_t *ret_len)
 {
-  log_info("cipher_filter_cfb\n");
   cipher_filter_context_t *cfx = opaque;
   size_t size = *ret_len;
   int rc = 0;
-
+  log_info("cipher_filter_cfb %d %d\n",*ret_len, cfx->wrote_header);
+  // log_hexdump(buf, size);
   if (control == IOBUFCTRL_UNDERFLOW) /* decrypt */
     {
       // log_info("IOBUFCTRL_UNDERFLOW\n");
@@ -284,14 +285,20 @@ cipher_filter_cfb (void *opaque, int control,
     {
       log_info("IOBUFCTRL_FLUSH\n");
       log_assert (a);
-      if (!cfx->wrote_header)
-        write_cfb_header (cfx, a);
+      if (!cfx->wrote_header){
+        //log_info("write_cfb_header\n");
+write_cfb_header (cfx, a);
+
+      }
+        
       if (cfx->mdc_hash){
         log_info("Hashing mdc_hash\n");
         gcry_md_write (cfx->mdc_hash, buf, size);
       }
       // log_info("Encrypting2: %d bytes\n", size);
-          log_printhex (buf, size, "TO ENCRYPT:");
+          // log_printf("size: %d\n", size);
+          log_printhex (buf, size, "TO ENCRYPT 2:");
+          
 
       gcry_cipher_encrypt (cfx->cipher_hd, buf, size, NULL, 0);
       if (cfx->short_blklen_warn)
@@ -331,7 +338,7 @@ cipher_filter_cfb (void *opaque, int control,
           hash = gcry_md_read (cfx->mdc_hash, 0);
           memcpy(temp+2, hash, 20);
           log_info("Encrypting3: %d bytes\n", 22);
-          log_printhex (temp, 22, "TO ENCRYPT:");
+          log_printhex (temp, 22, "TO ENCRYPT 3:");
 
           gcry_cipher_encrypt (cfx->cipher_hd, temp, 22, NULL, 0);
           gcry_md_close (cfx->mdc_hash); cfx->mdc_hash = NULL;

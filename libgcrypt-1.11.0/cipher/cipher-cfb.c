@@ -101,7 +101,7 @@ _gcry_cipher_cfb_encrypt (gcry_cipher_hd_t c,
   else
     {
     log_info("cfb_encrypt 4 %d %d %d\n",inbuflen,outbuflen,c->unused);
-
+      int count = 0;
       while ( inbuflen >= blocksize_x_2 )
         {
           /* Encrypt the IV. */
@@ -112,7 +112,9 @@ _gcry_cipher_cfb_encrypt (gcry_cipher_hd_t c,
           outbuf += blocksize;
           inbuf += blocksize;
           inbuflen -= blocksize;
-          log_printhex("IV", c->u_iv.iv, blocksize);
+          count++;
+          if(count==0)
+            log_printhex("IV", c->u_iv.iv, blocksize);
         }
         log_printhex("IV", c->u_iv.iv, blocksize);
     }
