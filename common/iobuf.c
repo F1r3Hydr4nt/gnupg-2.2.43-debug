@@ -871,6 +871,7 @@ block_filter (void *opaque, int control, iobuf_t chain, byte * buffer,
 
   if (control == IOBUFCTRL_UNDERFLOW)
     {
+      log_info ("IOBUFCTRL_UNDERFLOW %d\n", size);
       size_t n = 0;
 
       p = buf;
@@ -992,6 +993,8 @@ block_filter (void *opaque, int control, iobuf_t chain, byte * buffer,
     }
   else if (control == IOBUFCTRL_FLUSH)
     {
+            log_info ("IOBUFCTRL_FLUSH %d\n", a->partial);
+
       if (a->partial)
 	{			/* the complicated openpgp scheme */
 	  size_t blen, n, nbytes = size + a->buflen;
@@ -1056,6 +1059,8 @@ block_filter (void *opaque, int control, iobuf_t chain, byte * buffer,
     }
   else if (control == IOBUFCTRL_INIT)
     {
+                  log_info ("IOBUFCTRL_INIT %d\n", a->partial);
+
       if (DBG_IOBUF)
 	log_debug ("init block_filter %p\n", a);
       if (a->partial)
@@ -1070,10 +1075,13 @@ block_filter (void *opaque, int control, iobuf_t chain, byte * buffer,
     }
   else if (control == IOBUFCTRL_DESC)
     {
+      log_info ("IOBUFCTRL_DESC %d\n", a->partial);
       mem2str (buf, "block_filter", *ret_len);
     }
   else if (control == IOBUFCTRL_FREE)
     {
+            log_info ("IOBUFCTRL_FREE %d\n", a->partial);
+
       if (a->use == IOBUF_OUTPUT)
 	{			/* write the end markers */
 	  if (a->partial)
@@ -1091,7 +1099,7 @@ block_filter (void *opaque, int control, iobuf_t chain, byte * buffer,
 	       */
 	      /* construct header */
 	      len = a->buflen;
-	      /*log_debug("partial: remaining length=%u\n", len ); */
+	      log_info("partial: remaining length=%u\n", len );
 	      if (len < 192)
 		rc = iobuf_put (chain, len);
 	      else if (len < 8384)
@@ -2257,6 +2265,7 @@ log_hexdump (byte *buffer, int length)
 int
 iobuf_writebyte (iobuf_t a, unsigned int c)
 {
+  log_info("iobuf_writebyte %02X",c);
   int rc;
 
   if (a->use == IOBUF_INPUT || a->use == IOBUF_INPUT_TEMP)
