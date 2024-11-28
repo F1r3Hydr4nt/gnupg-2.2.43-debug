@@ -113,7 +113,7 @@ const char* get_pkttype_name(pkttype_t pkttype) {
 int
 build_packet (IOBUF out, PACKET *pkt)
 {
-    log_info("        BUILD PACKET: %s",get_pkttype_name(pkt->pkttype));
+    log_info("        BUILD PACKET: %s out->use %d",get_pkttype_name(pkt->pkttype), out->use);
 
   int rc = 0;
   int new_ctb = 0;
@@ -151,7 +151,7 @@ build_packet (IOBUF out, PACKET *pkt)
     default:
       break;
     }
-
+  log_info("build_packet: pkttype %d new_ctb %d", pkttype, new_ctb);
   if (new_ctb || pkttype > 15) /* new format */
     ctb = (0xc0 | (pkttype & 0x3f));
   else
@@ -647,6 +647,7 @@ do_key (iobuf_t out, int ctb, PKT_public_key *pk)
   iobuf_close (a); /* Close the temporary buffer */
   return err;
 }
+
 void print_iobuf_info2(const struct iobuf_struct *iobuf) {
         // log_info("print_iobuf_info2\n");
     if (!iobuf) {
@@ -684,7 +685,7 @@ static void
 log_hexdump (byte *buffer, int length)
 {
   int written = 0;
-
+  log_info ("Hex dump:\n");
   fprintf (stderr, "%d bytes:\n", length);
   while (length > 0)
     {

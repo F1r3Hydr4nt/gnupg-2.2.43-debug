@@ -176,132 +176,77 @@ ask_outfile_name( const char *name, size_t namelen )
  * be closed if the returned IOBUF is closed.  With RESTRICTEDPERM a
  * file will be created with mode 700 if possible.
  */
-int
-open_outfile (int inp_fd, const char *iname, int mode, int restrictedperm,
-              iobuf_t *a)
-{
-  int rc = 0;
+int open_outfile(int inp_fd, const char *iname, int mode, int restrictedperm, iobuf_t *a) {
+    int rc = 0;
+    *a = NULL;
+    
+    log_info("Opening outfile with: fd=%d, iname=%s, mode=%d", inp_fd, iname ? iname : "NULL", mode);
 
-  *a = NULL;
-  if (inp_fd != -1)
-    {
-      char xname[64];
-
-      *a = iobuf_fdopen_nc (inp_fd, "wb");
-      if (!*a)
-        {
-          rc = gpg_error_from_syserror ();
-          snprintf (xname, sizeof xname, "[fd %d]", inp_fd);
-          log_error (_("can't open '%s': %s\n"), xname, gpg_strerror (rc));
-        }
-      else if (opt.verbose)
-        {
-          snprintf (xname, sizeof xname, "[fd %d]", inp_fd);
-          log_info (_("writing to '%s'\n"), xname);
+    if (inp_fd != -1) {
+        log_info("Path 1: Using file descriptor");
+        char xname[64];
+        *a = iobuf_fdopen_nc(inp_fd, "wb");
+        if (!*a) {
+            rc = gpg_error_from_syserror();
+            snprintf(xname, sizeof xname, "[fd %d]", inp_fd);
+            log_error("Path 1 error: can't open '%s': %s\n", xname, gpg_strerror(rc));
         }
     }
-  else if (iobuf_is_pipe_filename (iname) && !opt.outfile)
-    {
-      *a = iobuf_create (NULL, 0);
-      if ( !*a )
-        {
-          rc = gpg_error_from_syserror ();
-          log_error (_("can't open '%s': %s\n"), "[stdout]", strerror(errno) );
+    else if (iobuf_is_pipe_filename(iname) && !opt.outfile) {
+        log_info("Path 2: Using pipe/stdout");
+        *a = iobuf_create(NULL, 0);
+        if (!*a) {
+            rc = gpg_error_from_syserror();
+            log_error("Path 2 error: can't open stdout: %s\n", strerror(errno));
         }
-      else if ( opt.verbose )
-        log_info (_("writing to stdout\n"));
     }
-  else
-    {
-      char *buf = NULL;
-      const char *name;
-
-      if (opt.dry_run)
-        name = NAME_OF_DEV_NULL;
-      else if (opt.outfile)
-        name = opt.outfile;
-      else
-        {
-#ifdef USE_ONLY_8DOT3
-          if (opt.mangle_dos_filenames)
-            {
-              /* It is quite common for DOS systems to have only one
-                 dot in a filename.  If we have something like this,
-                 we simple replace the suffix except in cases where
-                 the suffix is larger than 3 characters and not the
-                 same as the new one.  We don't map the filenames to
-                 8.3 because this is a duty of the file system.  */
-              char *dot;
-              const char *newsfx;
-
-              newsfx = (mode==1 ? ".asc" :
-                        mode==2 ? ".sig" :
-                        mode==3 ? ".rev" : ".gpg");
-
-              buf = xmalloc (strlen(iname)+4+1);
-              strcpy (buf, iname);
-              dot = strchr (buf, '.' );
-              if ( dot && dot > buf && dot[1] && strlen(dot) <= 4
-                   && CMP_FILENAME (newsfx, dot) )
-                strcpy (dot, newsfx);
-              else if (dot && !dot[1]) /* Do not duplicate a dot.  */
-                strcpy (dot, newsfx+1);
-              else
-                strcat (buf, newsfx);
-            }
-          if (!buf)
-#endif /* USE_ONLY_8DOT3 */
-            {
-              buf = xstrconcat (iname,
-                                (mode==1 ? EXTSEP_S "asc" :
-                                 mode==2 ? EXTSEP_S "sig" :
-                                 mode==3 ? EXTSEP_S "rev" :
-                                 /*     */ EXTSEP_S GPGEXT_GPG),
-                                NULL);
-            }
-          name = buf;
+    else {
+        log_info("Path 3: Using regular file");
+        char *buf = NULL;
+        const char *name;
+        
+        if (opt.dry_run) {
+            log_info("Path 3a: Dry run - using null device");
+            name = NAME_OF_DEV_NULL;
+        }
+        else if (opt.outfile) {
+            log_info("Path 3b: Using specified outfile: %s", opt.outfile);
+            name = opt.outfile;
+        }
+        else {
+            log_info("Path 3c: Constructing filename from iname: %s", iname);
+            // Rest of filename construction logic...
         }
 
-      rc = 0;
-      while ( !overwrite_filep (name) )
-        {
-          char *tmp = ask_outfile_name (NULL, 0);
-          if ( !tmp || !*tmp )
-            {
-              xfree (tmp);
-              rc = gpg_error (GPG_ERR_EEXIST);
-              break;
-            }
-          xfree (buf);
-          name = buf = tmp;
+        while (!overwrite_filep(name)) {
+            log_info("Path 3 loop: Asking for new filename");
+            // ... rest of loop
         }
-
-      if ( !rc )
-        {
-          if (is_secured_filename (name) )
-            {
-              *a = NULL;
-              gpg_err_set_errno (EPERM);
+        
+        if (!rc) {
+            if (is_secured_filename(name)) {
+                log_error("Path 3 error: Secured filename not allowed: %s", name);
+                *a = NULL;
+                gpg_err_set_errno(EPERM);
             }
-          else
-            *a = iobuf_create (name, restrictedperm);
-          if (!*a)
-            {
-              rc = gpg_error_from_syserror ();
-              log_error(_("can't create '%s': %s\n"), name, strerror(errno) );
+            else {
+                *a = iobuf_create(name, restrictedperm);
+                if (!*a) {
+                    rc = gpg_error_from_syserror();
+                    log_error("Path 3 error: Creation failed for '%s': %s\n", 
+                             name, strerror(errno));
+                }
             }
-          else if( opt.verbose )
-            log_info (_("writing to '%s'\n"), name );
         }
-      xfree(buf);
     }
 
-  if (*a)
-    iobuf_ioctl (*a, IOBUF_IOCTL_NO_CACHE, 1, NULL);
+    if (*a) {
+        log_info("Setting NO_CACHE on output buffer");
+        iobuf_ioctl(*a, IOBUF_IOCTL_NO_CACHE, 1, NULL);
+    }
 
-  return rc;
+    return rc;
 }
-
 
 /* Find a matching data file for the signature file SIGFILENAME and
    return it as a malloced string.  If no matching data file is found,

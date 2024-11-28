@@ -852,6 +852,25 @@ sock_filter (void *opaque, int control, iobuf_t chain, byte * buf,
   return rc;
 }
 #endif /*HAVE_W32_SYSTEM*/
+const char* control_mode_str[] = {
+    "UNKNOWN",
+    "IOBUFCTRL_INIT",
+    "IOBUFCTRL_FREE",
+    "IOBUFCTRL_UNDERFLOW",
+    "IOBUFCTRL_FLUSH",
+    "IOBUFCTRL_DESC",
+    "IOBUFCTRL_CANCEL",
+    "IOBUFCTRL_PEEK",
+    "UNKNOWN",
+    "UNKNOWN",
+    "UNKNOWN",
+    "UNKNOWN",
+    "UNKNOWN",
+    "UNKNOWN",
+    "UNKNOWN",
+    "UNKNOWN",
+    "IOBUFCTRL_USER"
+};
 
 /****************
  * This is used to implement the block write mode.
@@ -862,7 +881,7 @@ static int
 block_filter (void *opaque, int control, iobuf_t chain, byte * buffer,
 	      size_t * ret_len)
 {
-  log_info ("block_filter %d\n",control);
+log_info("block_filter %s\n", control_mode_str[control]);
   block_filter_ctx_t *a = opaque;
   char *buf = (char *)buffer;
   size_t size = *ret_len;
@@ -893,6 +912,7 @@ block_filter (void *opaque, int control, iobuf_t chain, byte * buffer,
 		{
 		  /* These OpenPGP introduced huffman like encoded length
 		   * bytes are really a mess :-( */
+            	      log_info("These OpenPGP introduced huffman like encoded length bytes are really a mess :-(" );
 		  if (a->first_c)
 		    {
 		      c = a->first_c;
@@ -1045,6 +1065,8 @@ block_filter (void *opaque, int control, iobuf_t chain, byte * buffer,
 	      /* store the rest in the buffer */
 	      if (!rc && nbytes)
 		{
+      	      log_info("store the rest in the buffer" );
+
 		  log_assert (!a->buflen);
 		  log_assert (nbytes < OP_MIN_PARTIAL_CHUNK);
 		  if (!a->buffer)
@@ -1099,24 +1121,31 @@ block_filter (void *opaque, int control, iobuf_t chain, byte * buffer,
 	       */
 	      /* construct header */
 	      len = a->buflen;
-	      log_info("partial: remaining length=%u\n", len );
-	      if (len < 192)
-		rc = iobuf_put (chain, len);
+	      if (len < 192){
+		      rc = iobuf_put (chain, len);
+          log_info("1 byte <192 partial: remaining length=%u\n", len );
+
+        }
 	      else if (len < 8384)
-		{
+		{ // Use a 2 byte header
+      log_info("2 byte header partial: remaining length=%u\n", len );
 		  if (!(rc = iobuf_put (chain, ((len - 192) / 256) + 192)))
 		    rc = iobuf_put (chain, ((len - 192) % 256));
 		}
 	      else
 		{		/* use a 4 byte header */
+      log_info("4 byte header partial: remaining length=%u\n", len );
+
 		  if (!(rc = iobuf_put (chain, 0xff)))
 		    if (!(rc = iobuf_put (chain, (len >> 24) & 0xff)))
 		      if (!(rc = iobuf_put (chain, (len >> 16) & 0xff)))
 			if (!(rc = iobuf_put (chain, (len >> 8) & 0xff)))
 			  rc = iobuf_put (chain, len & 0xff);
 		}
-	      if (!rc && len)
+	      if (!rc && len){
+    log_info("1 byte header partial: remaining length=%u\n", len );
 		rc = iobuf_write (chain, a->buffer, len);
+        }
 	      if (rc)
 		{
 		  log_error ("block_filter: write error: %s\n",
@@ -1611,7 +1640,7 @@ iobuf_push_filter (iobuf_t a,
                    void *ov)
 {
 
-   //  log_info("iobuf_push_filter %d",a->use);
+   log_info("iobuf_push_filter %d",a->use);
   return iobuf_push_filter2 (a, f, ov, 0);
 }
 
@@ -2292,7 +2321,7 @@ iobuf_writebyte (iobuf_t a, unsigned int c)
 int
 iobuf_write (iobuf_t a, const void *buffer, unsigned int buflen)
 {
-  // log_info("iobuf_write %d",buflen);
+  log_info("iobuf_write %d",buflen);
   const unsigned char *buf = (const unsigned char *)buffer;
   int rc;
 
@@ -2310,6 +2339,8 @@ iobuf_write (iobuf_t a, const void *buffer, unsigned int buflen)
 	  if (size > buflen)
 	    size = buflen;
 	  memcpy (a->d.buf + a->d.len, buf, size);
+
+  log_info("iobuf_WROTE: %d bytes\n", size);
 	  buflen -= size;
 	  buf += size;
 	  a->d.len += size;
@@ -2322,7 +2353,6 @@ iobuf_write (iobuf_t a, const void *buffer, unsigned int buflen)
 	}
     }
   while (buflen);
-  log_info("iobuf_write: %d bytes\n", a->d.len);
 
   return 0;
 }

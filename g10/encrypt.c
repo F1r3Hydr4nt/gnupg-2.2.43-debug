@@ -53,6 +53,7 @@ static int write_pubkey_enc_from_list (ctrl_t ctrl,
 int
 encrypt_symmetric (const char *filename)
 {
+  log_info("encrypt_symmetric\n");
   return encrypt_simple( filename, 1, opt.force_ocb);
 }
 
@@ -422,6 +423,7 @@ encrypt_simple (const char *filename, int mode, int use_seskey)
   cfx.dek = NULL;
   if ( mode )
     {
+      log_info("mode %d",mode);
       aead_algo_t aead_algo;
 
       rc = setup_symkey (&s2k, &cfx.dek);
@@ -487,6 +489,7 @@ encrypt_simple (const char *filename, int mode, int use_seskey)
       do_compress = 0;
     }
 
+      log_info("armor2 %d",rc);
   if ( rc || (rc = open_outfile (-1, filename, opt.armor? 1:0, 0, &out )))
     {
       iobuf_cancel (inp);
@@ -498,13 +501,14 @@ encrypt_simple (const char *filename, int mode, int use_seskey)
 
   if ( opt.armor )
     {
+      log_info("armor");
       afx = new_armor_context ();
       push_armor_filter (afx, out);
     }
 
   if ( s2k )
     {
-    // log_info("s2k");
+      log_info("s2k");
       PKT_symkey_enc *enc = xmalloc_clear (sizeof *enc + enckeylen);
       enc->version = cfx.dek->use_aead ? 5 : 4;
       enc->cipher_algo = cfx.dek->algo;
@@ -512,6 +516,7 @@ encrypt_simple (const char *filename, int mode, int use_seskey)
       enc->s2k = *s2k;
       if (enckeylen)
         {
+          log_info("Enc key len %d",enckeylen);
           enc->seskeylen = enckeylen;
           memcpy (enc->seskey, enckey, enckeylen);
         }
@@ -524,9 +529,11 @@ encrypt_simple (const char *filename, int mode, int use_seskey)
       enckey = NULL;
     }
 
-  if (!opt.no_literal)
+  if (!opt.no_literal){
+    log_info("!opt.no_literal %s",filename);
     pt = setup_plaintext_name (filename, inp);
 
+  }
   /* Note that PGP 5 has problems decrypting symmetrically encrypted
      data if the file length is in the inner packet. It works when
      only partial length headers are use.  In the past, we always used
@@ -543,7 +550,7 @@ encrypt_simple (const char *filename, int mode, int use_seskey)
       uint64_t tmpsize;
 
       tmpsize = iobuf_get_filelength(inp);
-    // log_info("tmpsize %d",tmpsize);
+      log_info("tmpsize %d",tmpsize);
       if (!tmpsize && opt.verbose)
         log_info(_("WARNING: '%s' is an empty file\n"), filename );
 
@@ -572,8 +579,7 @@ encrypt_simple (const char *filename, int mode, int use_seskey)
       pkt.pkttype = PKT_PLAINTEXT;
       pkt.pkt.plaintext = pt;
       cfx.datalen = filesize && !do_compress ? calc_packet_length( &pkt ) : 0;
-            log_info("cfx.datalen %d",cfx.datalen);
-
+      log_info("cfx.datalen %d",cfx.datalen);
     }
   else
     {
@@ -1032,7 +1038,7 @@ encrypt_crypt (ctrl_t ctrl, int filefd, const char *filename,
     }
   else
     cfx.datalen = filesize && !do_compress ? filesize : 0;
-
+log_info ("REGISTERIGNG\n");
   /* Register the cipher filter. */
   iobuf_push_filter (out,
                      cfx.dek->use_aead? cipher_filter_ocb
