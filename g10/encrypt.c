@@ -352,8 +352,9 @@ void print_iobuf_info(const struct iobuf_struct *iobuf) {
 static int
 encrypt_simple (const char *filename, int mode, int use_seskey)
 {
-  log_info("encrypt_simple");
+  log_info("encrypt_simple %d %d", filename, mode);
   iobuf_t inp, out;
+
   PACKET pkt;
   PKT_plaintext *pt = NULL;
   STRING2KEY *s2k = NULL;
@@ -388,6 +389,8 @@ encrypt_simple (const char *filename, int mode, int use_seskey)
 
   /* Prepare iobufs. */
   inp = iobuf_open(filename);
+  log_info("encrypt_simple inp %d\n", inp);
+  print_iobuf_info(inp);
   if (inp)
     iobuf_ioctl (inp, IOBUF_IOCTL_NO_CACHE, 1, NULL);
   if (inp && is_secured_file (iobuf_get_fd (inp)))
@@ -398,6 +401,8 @@ encrypt_simple (const char *filename, int mode, int use_seskey)
     }
   if (!inp)
     {
+        log_info("encrypt_simple !inp %d\n", inp);
+
       rc = gpg_error_from_syserror ();
       log_error(_("can't open '%s': %s\n"), filename? filename: "[stdin]",
                 strerror(errno) );
@@ -407,7 +412,7 @@ encrypt_simple (const char *filename, int mode, int use_seskey)
 
   peekbuflen = iobuf_ioctl (inp, IOBUF_IOCTL_PEEK, sizeof peekbuf, peekbuf);
 
-    // log_info("peekbuflen %d",peekbuflen);
+log_info("peekbuflen %d",peekbuflen);
   if (peekbuflen < 0)
     {
       peekbuflen = 0;
@@ -417,9 +422,10 @@ encrypt_simple (const char *filename, int mode, int use_seskey)
 
   handle_progress (pfx, inp, filename);
 
-  if (opt.textmode)
+  if (opt.textmode){
+    log_info("TEXT MODE\n");
     iobuf_push_filter( inp, text_filter, &tfx );
-
+  }
   cfx.dek = NULL;
   if ( mode )
     {
@@ -498,7 +504,7 @@ encrypt_simple (const char *filename, int mode, int use_seskey)
       release_progress_context (pfx);
       return rc;
     }
-
+  log_info("open_outfile %d",out->filter);
   if ( opt.armor )
     {
       log_info("armor");
@@ -931,6 +937,7 @@ encrypt_crypt (ctrl_t ctrl, int filefd, const char *filename,
     log_info (_("reading from '%s'\n"), iobuf_get_fname_nonnull (inp));
 
   peekbuflen = iobuf_ioctl (inp, IOBUF_IOCTL_PEEK, sizeof peekbuf, peekbuf);
+  log_info("peekbuflen: %d\n", peekbuflen);
   if (peekbuflen < 0)
     {
       peekbuflen = 0;
@@ -1038,7 +1045,7 @@ encrypt_crypt (ctrl_t ctrl, int filefd, const char *filename,
     }
   else
     cfx.datalen = filesize && !do_compress ? filesize : 0;
-log_info ("REGISTERIGNG\n");
+  log_info ("REGISTERIGNG\n");
   /* Register the cipher filter. */
   iobuf_push_filter (out,
                      cfx.dek->use_aead? cipher_filter_ocb

@@ -731,6 +731,7 @@ gcry_error_t
 gcry_cipher_open (gcry_cipher_hd_t *handle,
                   int algo, int mode, unsigned int flags)
 {
+  log_info("gcry_cipher_open\n");
   if (!fips_is_operational ())
     {
       *handle = NULL;

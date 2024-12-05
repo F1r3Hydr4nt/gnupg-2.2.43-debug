@@ -268,41 +268,49 @@ buf_xor(void *_dst, const void *_src1, const void *_src2, size_t len)
     *dst++ = *src1++ ^ *src2++;
 }
 
-
-/* Optimized function for buffer xoring with two destination buffers.  Used
-   mainly by CFB mode encryption.  */
 static inline void
 buf_xor_2dst(void *_dst1, void *_dst2, const void *_src, size_t len)
 {
-  byte *dst1 = _dst1;
-  byte *dst2 = _dst2;
-  const byte *src = _src;
+   byte *dst1 = _dst1;
+   byte *dst2 = _dst2;
+   const byte *src = _src;
 
-  while (len >= sizeof(u64))
-    {
-      u64 temp = buf_get_he64(dst2) ^ buf_get_he64(src);
-      buf_put_he64(dst2, temp);
-      buf_put_he64(dst1, temp);
-      dst2 += sizeof(u64);
-      dst1 += sizeof(u64);
-      src += sizeof(u64);
-      len -= sizeof(u64);
-    }
+  //  log_info("Initial len: %zu\n", len);
+  //  log_info("Initial bytes - src: %02x %02x, dst2: %02x %02x\n",
+  //         src[0], src[1], dst2[0], dst2[1]);
 
-  if (len >= sizeof(u32))
-    {
-      u32 temp = buf_get_he32(dst2) ^ buf_get_he32(src);
-      buf_put_he32(dst2, temp);
-      buf_put_he32(dst1, temp);
-      dst2 += sizeof(u32);
-      dst1 += sizeof(u32);
-      src += sizeof(u32);
-      len -= sizeof(u32);
-    }
+   while (len >= sizeof(u64))
+   {
+       u64 temp = buf_get_he64(dst2) ^ buf_get_he64(src);
+     //  log_info("64-bit block - temp: %016llx\n", temp);
+       buf_put_he64(dst2, temp);
+       buf_put_he64(dst1, temp);
+       dst2 += sizeof(u64);
+       dst1 += sizeof(u64);
+       src += sizeof(u64);
+       len -= sizeof(u64);
+   }
 
-  /* Handle tail.  */
-  for (; len; len--)
-    *dst1++ = (*dst2++ ^= *src++);
+   if (len >= sizeof(u32))
+   {
+       u32 temp = buf_get_he32(dst2) ^ buf_get_he32(src);
+       // log_info("32-bit block - temp: %08x\n", temp);
+       buf_put_he32(dst2, temp);
+       buf_put_he32(dst1, temp);
+       dst2 += sizeof(u32);
+       dst1 += sizeof(u32);
+       src += sizeof(u32);
+       len -= sizeof(u32);
+   }
+
+   // log_info("Remaining len: %zu\n", len);
+   for (; len; len--)
+   {
+      //  log_info("Byte: src=%02x dst2=%02x result=%02x\n",
+      //         *src, *dst2, *src ^ *dst2);
+       *dst1++ = (*dst2++ ^= *src++);
+   }
+   // log_info("Final 2 bytes of dst2: %02x %02x\n", dst2[-2], dst2[-1]);
 }
 
 

@@ -650,6 +650,7 @@ parse (parse_packet_ctx_t ctx, PACKET *pkt, int onlykeypkts, off_t * retpos,
 #endif
        )
 {
+  log_info ("parse\n");
   int rc = 0;
   iobuf_t inp;
   int c, ctb, pkttype, lenbytes;
@@ -891,6 +892,35 @@ parse (parse_packet_ctx_t ctx, PACKET *pkt, int onlykeypkts, off_t * retpos,
 
   pkt->pkttype = pkttype;
   rc = GPG_ERR_UNKNOWN_PACKET;	/* default error */
+  /* Add this before the switch statement */
+static const char *pkt_type_str[] = {
+    [PKT_PUBLIC_KEY] = "PUBLIC_KEY",
+    [PKT_PUBLIC_SUBKEY] = "PUBLIC_SUBKEY", 
+    [PKT_SECRET_KEY] = "SECRET_KEY",
+    [PKT_SECRET_SUBKEY] = "SECRET_SUBKEY",
+    [PKT_SYMKEY_ENC] = "SYMKEY_ENC",
+    [PKT_PUBKEY_ENC] = "PUBKEY_ENC",
+    [PKT_SIGNATURE] = "SIGNATURE",
+    [PKT_ONEPASS_SIG] = "ONEPASS_SIG",
+    [PKT_USER_ID] = "USER_ID",
+    [PKT_ATTRIBUTE] = "ATTRIBUTE",
+    [PKT_OLD_COMMENT] = "OLD_COMMENT",
+    [PKT_COMMENT] = "COMMENT",
+    [PKT_RING_TRUST] = "RING_TRUST",
+    [PKT_PLAINTEXT] = "PLAINTEXT",
+    [PKT_COMPRESSED] = "COMPRESSED",
+    [PKT_ENCRYPTED] = "ENCRYPTED",
+    [PKT_ENCRYPTED_MDC] = "ENCRYPTED_MDC",
+    [PKT_MDC] = "MDC",
+    [PKT_ENCRYPTED_AEAD] = "ENCRYPTED_AEAD",
+    [PKT_GPG_CONTROL] = "GPG_CONTROL",
+    [PKT_MARKER] = "MARKER"
+};
+
+/* Add at start of switch statement */
+log_info("Processing packet type: %s (%d)", 
+          pkttype < sizeof(pkt_type_str)/sizeof(*pkt_type_str) ? 
+          pkt_type_str[pkttype] : "UNKNOWN", pkttype);
   switch (pkttype)
     {
     case PKT_PUBLIC_KEY:
@@ -2419,6 +2449,7 @@ static int
 parse_key (IOBUF inp, int pkttype, unsigned long pktlen,
 	   byte * hdr, int hdrlen, PACKET * pkt)
 {
+  log_info("parse_key\n");
   gpg_error_t err = 0;
   int i, version, algorithm;
   unsigned long timestamp, expiredate, max_expiredate;

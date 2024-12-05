@@ -274,7 +274,7 @@ cipher_filter_cfb (void *opaque, int control,
   cipher_filter_context_t *cfx = opaque;
   size_t size = *ret_len;
   int rc = 0;
-  log_info("cipher_filter_cfb %d %d\n",*ret_len, cfx->wrote_header);
+  log_info("cipher_filter_cfb %d %d\n",control, cfx->wrote_header);
   // log_hexdump(buf, size);
   if (control == IOBUFCTRL_UNDERFLOW) /* decrypt */
     {
@@ -355,7 +355,7 @@ write_cfb_header (cfx, a);
       // log_info("IOBUFCTRL_DESC\n");
       mem2str (buf, "cipher_filter_cfb", *ret_len);
     }
-    // log_info("cipher_filter_cfb RETURNING\n");
+  log_info("cipher_filter_cfb RETURNING %d\n", rc);
 
   return rc;
 }

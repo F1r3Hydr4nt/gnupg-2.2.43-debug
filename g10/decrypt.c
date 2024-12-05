@@ -44,6 +44,7 @@
 int
 decrypt_message (ctrl_t ctrl, const char *filename)
 {
+  log_info("decrypt_message filename:%s\n",filename);
   IOBUF fp;
   armor_filter_context_t *afx = NULL;
   progress_filter_context_t *pfx;
@@ -58,6 +59,8 @@ decrypt_message (ctrl_t ctrl, const char *filename)
       iobuf_close (fp);
       fp = NULL;
       gpg_err_set_errno (EPERM);
+    }else{
+      log_info("ELSE\n");
     }
   if ( !fp )
     {
@@ -86,6 +89,7 @@ decrypt_message (ctrl_t ctrl, const char *filename)
     }
   else
     opt.flags.dummy_outfile = 0;
+  log_info("opt.outfile:%s\n",opt.outfile);
   rc = proc_encryption_packets (ctrl, NULL, fp );
   if (opt.flags.dummy_outfile)
     opt.outfile = NULL;

@@ -6,6 +6,7 @@
         "string_view": "c",
         "initializer_list": "c",
         "ranges": "c",
-        "utility": "c"
+        "utility": "c",
+        "config.h": "c"
     }
 }

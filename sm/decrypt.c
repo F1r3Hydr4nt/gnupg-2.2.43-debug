@@ -781,6 +781,7 @@ prepare_decryption (ctrl_t ctrl, const char *hexkeygrip,
                     ksba_const_sexp_t enc_val,
                     struct decrypt_filter_parm_s *parm)
 {
+  log_info("prepare_decryption\n");
   char *seskey = NULL;
   size_t n, seskeylen;
   int pwri = !hexkeygrip && !pk_algo;
@@ -947,6 +948,7 @@ decrypt_filter (void *arg,
                 const void *inbuf, size_t inlen, size_t *inused,
                 void *outbuf, size_t maxoutlen, size_t *outlen)
 {
+  log_info ("decrypt_filter\n");
   struct decrypt_filter_parm_s *parm = arg;
   int blklen = parm->blklen;
   size_t orig_inlen = inlen;

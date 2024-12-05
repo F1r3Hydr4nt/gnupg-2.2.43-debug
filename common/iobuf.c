@@ -1359,6 +1359,7 @@ static iobuf_t
 do_open (const char *fname, int special_filenames,
 	 int use, const char *opentype, int mode700)
 {
+  log_info("do_open %s %d %s", fname, use, opentype);
   iobuf_t a;
   gnupg_fd_t fp;
   file_filter_ctx_t *fcx;
@@ -1531,6 +1532,7 @@ iobuf_sockopen (int fd, const char *mode)
 int
 iobuf_ioctl (iobuf_t a, iobuf_ioctl_t cmd, int intval, void *ptrval)
 {
+  log_info("iobuf_ioctl %d %d %d",cmd,intval, ptrval);
   byte desc[MAX_IOBUF_DESC];
 
   if (cmd == IOBUF_IOCTL_KEEP_OPEN)
@@ -1617,6 +1619,7 @@ iobuf_ioctl (iobuf_t a, iobuf_ioctl_t cmd, int intval, void *ptrval)
 		   a ? a->no : -1, a ? a->subno : -1, iobuf_desc (a, desc));
       if (a->filter == file_filter && ptrval && intval)
         {
+          log_info("iobuf_ioctl file_filter\n");
           file_filter_ctx_t *fcx = a->filter_ov;
           size_t len = intval;
 
@@ -1650,6 +1653,7 @@ iobuf_push_filter2 (iobuf_t a,
 			      iobuf_t chain, byte * buf, size_t * len),
 		    void *ov, int rel_ov)
 {
+  // log_info("iobuf_push_filter2 %d",a->use);
   iobuf_t b;
   size_t dummy_len = 0;
   int rc = 0;
@@ -2514,6 +2518,7 @@ iobuf_get_filelength (iobuf_t a)
 int
 iobuf_get_fd (iobuf_t a)
 {
+  log_info("iobuf_get_fd\n");
   for (; a->chain; a = a->chain)
     ;
 

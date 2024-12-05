@@ -28,6 +28,7 @@ uname -v = #35~22.04.1-Ubuntu SMP PREEMPT_DYNAMIC Tue May  7 09:00:52 UTC 2
 /bin/universe          = unknown
 
 PATH: /opt/cross/bin
+PATH: /opt/cross/bin
 PATH: /home/freddie/.nvm/versions/node/v18.20.1/bin
 PATH: /usr/local/sbin
 PATH: /usr/local/bin
@@ -38,6 +39,8 @@ PATH: /bin
 PATH: /usr/games
 PATH: /usr/local/games
 PATH: /snap/bin
+PATH: /home/freddie/.yarn/bin
+PATH: /home/freddie/.yarn/bin
 
 
 ## ----------- ##
@@ -64,7 +67,7 @@ configure:3580: result: x86_64-pc-linux-gnu
 configure:3604: autobuild project... gnupg
 configure:3606: autobuild revision... 2.2.43
 configure:3610: autobuild hostname... freddie-Precision-7510
-configure:3623: autobuild timestamp... 20240625-141939
+configure:3623: autobuild timestamp... 20241204-185751
 configure:3632: checking whether make supports the include directive
 configure:3647: make -f confmf.GNU && cat confinc.out
 this is the am__doit target
@@ -744,7 +747,7 @@ configure:10506: $? = 0
 configure:10523: result: none required
 configure:10596: checking for library containing res_9_dn_skipname
 configure:10627: gcc -o conftest -g -O2   conftest.c  >&5
-/usr/bin/ld: /tmp/cchEXbg8.o: in function `main':
+/usr/bin/ld: /tmp/ccoG1Hfl.o: in function `main':
 /home/freddie/Downloads/gnupg-2.2.43/conftest.c:82: undefined reference to `res_9_dn_skipname'
 collect2: error: ld returned 1 exit status
 configure:10627: $? = 1
@@ -835,7 +838,7 @@ configure: failed program was:
 |   return 0;
 | }
 configure:10627: gcc -o conftest -g -O2   conftest.c -lresolv   >&5
-/usr/bin/ld: /tmp/cc1xZoNM.o: in function `main':
+/usr/bin/ld: /tmp/ccRj1zuJ.o: in function `main':
 /home/freddie/Downloads/gnupg-2.2.43/conftest.c:82: undefined reference to `res_9_dn_skipname'
 collect2: error: ld returned 1 exit status
 configure:10627: $? = 1
@@ -4433,7 +4436,7 @@ configure:14587: $? = 0
 configure:14587: result: yes
 configure:14593: checking for _doprnt
 configure:14593: gcc -o conftest -g -O2   conftest.c  >&5
-/usr/bin/ld: /tmp/cc6uSa0j.o: in function `main':
+/usr/bin/ld: /tmp/ccFmTkFc.o: in function `main':
 /home/freddie/Downloads/gnupg-2.2.43/conftest.c:143: undefined reference to `_doprnt'
 collect2: error: ld returned 1 exit status
 configure:14593: $? = 1
@@ -5136,7 +5139,7 @@ configure:14841: $? = 0
 configure:14841: result: yes
 configure:14841: checking for memicmp
 configure:14841: gcc -o conftest -g -O2   conftest.c  >&5
-/usr/bin/ld: /tmp/ccy3tVCC.o: in function `main':
+/usr/bin/ld: /tmp/ccJdRfYi.o: in function `main':
 /home/freddie/Downloads/gnupg-2.2.43/conftest.c:171: undefined reference to `memicmp'
 collect2: error: ld returned 1 exit status
 configure:14841: $? = 1
@@ -5404,7 +5407,7 @@ configure:14841: $? = 0
 configure:14841: result: yes
 configure:14841: checking for stricmp
 configure:14841: gcc -o conftest -g -O2   conftest.c  >&5
-/usr/bin/ld: /tmp/ccQ0iHQY.o: in function `main':
+/usr/bin/ld: /tmp/cc1cEIqV.o: in function `main':
 /home/freddie/Downloads/gnupg-2.2.43/conftest.c:188: undefined reference to `stricmp'
 collect2: error: ld returned 1 exit status
 configure:14841: $? = 1
@@ -5603,7 +5606,7 @@ configure: failed program was:
 configure:14841: result: no
 configure:14841: checking for strlwr
 configure:14841: gcc -o conftest -g -O2   conftest.c  >&5
-/usr/bin/ld: /tmp/ccp0cQwP.o: in function `main':
+/usr/bin/ld: /tmp/ccgQx7NG.o: in function `main':
 /home/freddie/Downloads/gnupg-2.2.43/conftest.c:188: undefined reference to `strlwr'
 collect2: error: ld returned 1 exit status
 configure:14841: $? = 1
@@ -7018,7 +7021,7 @@ configure: failed program was:
 configure:14994: result: no
 configure:15010: checking for getpeerucred
 configure:15010: gcc -o conftest -g -O2   conftest.c  >&5
-/usr/bin/ld: /tmp/ccd80Xej.o: in function `main':
+/usr/bin/ld: /tmp/ccgFjr4p.o: in function `main':
 /home/freddie/Downloads/gnupg-2.2.43/conftest.c:206: undefined reference to `getpeerucred'
 collect2: error: ld returned 1 exit status
 configure:15010: $? = 1

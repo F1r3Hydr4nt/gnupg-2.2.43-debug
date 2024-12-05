@@ -2300,7 +2300,10 @@ gpg_deinit_default_ctrl (ctrl_t ctrl)
 int
 main (int argc, char **argv)
 {
-    log_info("main");
+  log_info("main: argc=%d", argc);
+    // for (int i = 0; i < argc; i++) {
+    //     log_info("argv[%d]=%s", i, argv[i]);
+    // }    
     /*echo "Hello World!" | gpg --symmetric --cipher-algo CAST5 --passphrase "password" --s2k-digest-algo SHA1 --batch > encrypted.gpg
 */
     ARGPARSE_ARGS pargs;
@@ -4414,6 +4417,7 @@ main (int argc, char **argv)
 	  decrypt_messages (ctrl, argc, argv);
 	else
 	  {
+      log_info("Decrypting %s\n", fname);
 	    if( argc > 1 )
 	      wrong_args("--decrypt [filename]");
 	    if( (rc = decrypt_message (ctrl, fname) ))

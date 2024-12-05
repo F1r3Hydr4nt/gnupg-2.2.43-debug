@@ -225,6 +225,7 @@ int
 decrypt_data (ctrl_t ctrl, void *procctx, PKT_encrypted *ed, DEK *dek,
               int *compliance_error)
 {
+  log_info ("decrypt_data\n");
   decode_filter_ctx_t dfx;
   enum gcry_cipher_modes ciphermode;
   unsigned int startivlen;

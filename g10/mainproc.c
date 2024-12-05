@@ -277,6 +277,7 @@ add_signature (CTX c, PACKET *pkt)
 static gpg_error_t
 symkey_decrypt_seskey (DEK *dek, byte *seskey, size_t slen)
 {
+  log_info ("symkey_decrypt_seskey\n");
   gpg_error_t err;
   gcry_cipher_hd_t hd;
   enum gcry_cipher_modes ciphermode;
@@ -385,6 +386,7 @@ symkey_decrypt_seskey (DEK *dek, byte *seskey, size_t slen)
 static void
 proc_symkey_enc (CTX c, PACKET *pkt)
 {
+  log_info ("proc_symkey_enc\n");
   gpg_error_t err;
   PKT_symkey_enc *enc;
 
@@ -393,6 +395,7 @@ proc_symkey_enc (CTX c, PACKET *pkt)
     log_error ("invalid symkey encrypted packet\n");
   else if(!c->dek)
     {
+      log_info ("no DEK\n");
       int algo = enc->cipher_algo;
       const char *s = openpgp_cipher_algo_name (algo);
       const char *a = (enc->aead_algo ? openpgp_aead_algo_name (enc->aead_algo)
@@ -672,6 +675,7 @@ print_pkenc_list (ctrl_t ctrl, struct kidlist_item *list, int failed)
 static void
 proc_encrypted (CTX c, PACKET *pkt)
 {
+  log_info ("processing encrypted packet\n");
   int result = 0;
   int early_plaintext = literals_seen;
   unsigned int compliance_de_vs = 0;
@@ -1607,6 +1611,7 @@ proc_signature_packets_by_fd (ctrl_t ctrl,
 int
 proc_encryption_packets (ctrl_t ctrl, void *anchor, iobuf_t a )
 {
+  log_info("proc_encryption_packets a->use: %d", a->use);
   CTX c = xmalloc_clear (sizeof *c);
   int rc;
 
@@ -1641,6 +1646,8 @@ check_nesting (CTX c)
 static int
 do_proc_packets (ctrl_t ctrl, CTX c, iobuf_t a)
 {
+  log_info("do_proc_packets");
+  //log_printhex(c->iobuf->d.buf,c->iobuf->d.len,"do_proc_packets");
   PACKET *pkt;
   struct parse_packet_ctx_s parsectx;
   int rc = 0;
@@ -1667,7 +1674,7 @@ do_proc_packets (ctrl_t ctrl, CTX c, iobuf_t a)
               && opt.list_packets == 0)
             break;
           continue;
-	}
+	      }
       newpkt = -1;
       if (opt.list_packets)
         {

@@ -589,6 +589,7 @@ gcry_err_code_t
 _gcry_cipher_open (gcry_cipher_hd_t *handle,
                    int algo, int mode, unsigned int flags)
 {
+  log_info("_gcry_cipher_open\n");
   gcry_err_code_t rc;
   gcry_cipher_hd_t h = NULL;
 
@@ -607,6 +608,7 @@ gcry_err_code_t
 _gcry_cipher_open_internal (gcry_cipher_hd_t *handle,
 			    int algo, int mode, unsigned int flags)
 {
+  log_info ("_gcry_cipher_open_internal\n");
   int secure = (flags & GCRY_CIPHER_SECURE);
   gcry_cipher_spec_t *spec;
   gcry_cipher_hd_t h = NULL;

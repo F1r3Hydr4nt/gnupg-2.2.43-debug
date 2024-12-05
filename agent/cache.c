@@ -100,6 +100,7 @@ deinitialize_module_cache (void)
 static gpg_error_t
 init_encryption (void)
 {
+  log_info ("initializing cache encryption context\n");
   gpg_error_t err;
   void *key;
 

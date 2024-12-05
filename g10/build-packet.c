@@ -887,13 +887,13 @@ calc_plaintext( PKT_plaintext *pt )
 static int
 do_plaintext( IOBUF out, int ctb, PKT_plaintext *pt )
 {
-  log_info("do_plaintext\n");
+  log_info("do_plaintext pt->buf: %d\n", pt->buf);
     int rc = 0;
     size_t nbytes;
 
     log_assert (ctb_pkttype (ctb) == PKT_PLAINTEXT);
 
-log_info("Checking packet type\n");
+    log_info("Checking packet type\n");
     log_assert(ctb_pkttype(ctb) == PKT_PLAINTEXT);
 
     log_info("Writing header\n");
@@ -916,6 +916,9 @@ log_info("Checking packet type\n");
     pt->timestamp = 1624780800;
     log_info("Writing timestamp: %u\n", pt->timestamp);
     rc = write_32(out, pt->timestamp);
+    log_info("rc: %d\n", rc);
+    log_info("pt->buf: %d\n", pt->buf);
+    print_iobuf_info2(pt->buf);
     if (rc)
       return rc;
 

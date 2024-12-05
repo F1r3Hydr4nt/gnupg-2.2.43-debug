@@ -38,6 +38,7 @@
 void
 make_session_key( DEK *dek )
 {
+  log_info("make_session_key");
     gcry_cipher_hd_t chd;
     int i, rc;
 
