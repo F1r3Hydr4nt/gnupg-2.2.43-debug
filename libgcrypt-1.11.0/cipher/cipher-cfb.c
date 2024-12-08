@@ -170,7 +170,7 @@ _gcry_cipher_cfb_decrypt (gcry_cipher_hd_t c,
                           unsigned char *outbuf, size_t outbuflen,
                           const unsigned char *inbuf, size_t inbuflen)
 {
-  log_info("gcry_cipher_cfb_decrypt inbuflen %d outbuflen %d cfb_bulk %d\n",inbuflen,outbuflen,c->bulk.cfb_dec);
+  log_info("_gcry_cipher_cfb_decrypt inbuflen %d outbuflen %d cfb_bulk %d\n",inbuflen,outbuflen,c->bulk.cfb_dec);
   unsigned char *ivp;
   gcry_cipher_encrypt_t enc_fn = c->spec->encrypt;
   size_t blocksize_shift = _gcry_blocksize_shift(c);

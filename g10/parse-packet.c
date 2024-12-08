@@ -387,6 +387,7 @@ int
 dbg_parse_packet (parse_packet_ctx_t ctx, PACKET *pkt,
                   const char *dbg_f, int dbg_l)
 {
+  log_info("dbg_parse_packet\n");
   int skip, rc;
 
   do
@@ -642,6 +643,7 @@ skip_some_packets (iobuf_t inp, unsigned int n)
    If RETPOS is not NULL, then the position of CTX->INP (as returned by
    iobuf_tell) is saved there before any data is read from CTX->INP.
   */
+ 
 static int
 parse (parse_packet_ctx_t ctx, PACKET *pkt, int onlykeypkts, off_t * retpos,
        int *skip, IOBUF out, int do_skip
@@ -684,6 +686,9 @@ parse (parse_packet_ctx_t ctx, PACKET *pkt, int onlykeypkts, off_t * retpos,
     }
   hdrlen = 0;
   hdr[hdrlen++] = ctb;
+// Initial packet parsing
+log_info("Starting packet parse at position: %lu", (unsigned long)iobuf_tell(inp));
+log_info("Read CTB: 0x%02x (new_format=%d)", ctb, !!(ctb & 0x40));
 
   if (!(ctb & 0x80))
     {
@@ -815,6 +820,18 @@ parse (parse_packet_ctx_t ctx, PACKET *pkt, int onlykeypkts, off_t * retpos,
 	}
     }
 
+// Length parsing - new format
+log_info("Parsing new format packet length");
+log_info("First length byte: 0x%02x", c);
+log_info("One byte length: %lu", pktlen);
+log_info("Two byte length: %lu", pktlen);
+log_info("Four byte length: %lu", pktlen);
+log_info("Partial length encoding: mode=0x%02x", c & 0xff);
+
+// Length parsing - old format
+log_info("Parsing old format length (lenbytes=%d)", lenbytes);
+log_info("Old format packet length: %lu", pktlen);
+
   /* Sometimes the decompressing layer enters an error state in which
      it simply outputs 0xff for every byte read.  If we have a stream
      of 0xff bytes, then it will be detected as a new format packet
@@ -917,6 +934,11 @@ static const char *pkt_type_str[] = {
     [PKT_MARKER] = "MARKER"
 };
 
+// Packet processing
+log_info("Begin processing packet (type=%d, len=%lu, partial=%d)", pkttype, pktlen, partial);
+log_info("Skipping packet type %d", pkttype);
+log_info("Packet processing complete (rc=%d)", rc);
+
 /* Add at start of switch statement */
 log_info("Processing packet type: %s (%d)", 
           pkttype < sizeof(pkt_type_str)/sizeof(*pkt_type_str) ? 
@@ -1001,6 +1023,17 @@ log_info("Processing packet type: %s (%d)",
       ctx->last_pkt = *pkt;
     }
 
+// Error conditions
+log_info("Attempted copy of partial packet");
+log_info("Invalid length byte at position %lu", (unsigned long)iobuf_tell(inp));
+log_info("Possible stream corruption detected (type=63, len=0xFFFFFFFF)");
+
+// Context updates
+log_info("Storing packet in context (type=%d, rc=%d)", pkttype, rc);
+
+// Hex dumps
+log_info("Packet header (%d bytes):", hdrlen);
+// log_hexdump(hdr, hdrlen);
  leave:
   /* FIXME: We leak in case of an error (see the xmalloc's above).  */
   if (!rc && iobuf_error (inp))
@@ -3428,6 +3461,14 @@ static int
 parse_encrypted (IOBUF inp, int pkttype, unsigned long pktlen,
 		 PACKET * pkt, int new_ctb, int partial)
 {
+  log_info("parse_encrypted\n");
+  log_info("Packet length: %lu\n", pktlen);
+  // Add at start
+  log_info("=== parse_encrypted start ===\n");
+  log_info("Input buffer: %p\n", (void*)inp);
+  log_info("Packet type: %d (MDC: %d)\n", pkttype, (pkttype == PKT_ENCRYPTED_MDC));
+  log_info("Partial: %d\n", partial);
+  log_info("Buffer use: %d\n", inp->use);
   int rc = 0;
   PKT_encrypted *ed;
   unsigned long orig_pktlen = pktlen;
@@ -3482,6 +3523,7 @@ parse_encrypted (IOBUF inp, int pkttype, unsigned long pktlen,
      the MDC version number but with the IV etc.).  This value is
      required during decryption.  */
   ed->len = pktlen;
+    printf("Encrypted data length: %lu\n", ed->len);
 
   if (list_mode)
     {
@@ -3494,8 +3536,15 @@ parse_encrypted (IOBUF inp, int pkttype, unsigned long pktlen,
 	es_fprintf (listfp, "\tmdc_method: %d\n", ed->mdc_method);
     }
 
+  // After allocating ed
+  log_info("Allocated encrypted packet at: %p\n", (void*)ed);
+
+  // Before assigning buffer
+  log_info("Setting buf to input stream: %p\n", (void*)inp);
   ed->buf = inp;
 
+  // At leave
+  log_info("=== parse_encrypted end (rc=%d) ===\n", rc);
  leave:
   return rc;
 }

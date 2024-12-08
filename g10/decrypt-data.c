@@ -225,7 +225,31 @@ int
 decrypt_data (ctrl_t ctrl, void *procctx, PKT_encrypted *ed, DEK *dek,
               int *compliance_error)
 {
-  log_info ("decrypt_data\n");
+  log_info("decrypt_data\n");
+//   log_info("ed pointer: %p\n", (void *)ed);
+//   log_info("ed->len: %d\n", ed->len);
+//   log_info("ed->buf pointer: %p\n", (void *)ed->buf);
+//   log_info("ed->mdc_method: %d\n", ed->mdc_method);
+//   log_info("ed->is_partial: %d\n", ed->is_partial);
+//   log_info("ed->aead_algo: %d\n", ed->aead_algo);
+//   log_info("ed->buf contents: ");
+// byte buffer[64];
+// size_t bytes = 0;
+// while (bytes < sizeof(buffer)) {
+//    int c = iobuf_get(ed->buf);
+//    if (c == -1) break;
+//    printf("%02x ", c);
+//    buffer[bytes++] = c;
+// }
+// log_info("\n");
+
+// // Store first 10 bytes
+// byte saved[10];
+// memcpy(saved, buffer, 10);
+
+// // Create new iobuf with saved bytes
+// iobuf_t new_buf = iobuf_temp_with_content(saved, 10);
+// ed->buf = new_buf;
   decode_filter_ctx_t dfx;
   enum gcry_cipher_modes ciphermode;
   unsigned int startivlen;
@@ -444,7 +468,9 @@ decrypt_data (ctrl_t ctrl, void *procctx, PKT_encrypted *ed, DEK *dek,
       gcry_cipher_setiv (dfx->cipher_hd, NULL, 0);
 
       if ( ed->len )
-        {
+        {      
+          log_info("ed->len: %d\n", ed->len);
+
           for (i=0; i < (nprefix+2) && ed->len; i++, ed->len-- )
             {
               if ( (c=iobuf_get(ed->buf)) == -1 )
