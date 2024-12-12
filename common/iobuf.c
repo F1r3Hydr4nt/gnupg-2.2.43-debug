@@ -890,7 +890,7 @@ log_info("block_filter %s\n", control_mode_str[control]);
 
   if (control == IOBUFCTRL_UNDERFLOW)
     {
-      log_info ("IOBUFCTRL_UNDERFLOW %d\n", size);
+      // log_info ("IOBUFCTRL_UNDERFLOW %d\n", size);
       size_t n = 0;
 
       p = buf;
@@ -1013,7 +1013,7 @@ log_info("block_filter %s\n", control_mode_str[control]);
     }
   else if (control == IOBUFCTRL_FLUSH)
     {
-            log_info ("IOBUFCTRL_FLUSH %d\n", a->partial);
+          //  log_info ("IOBUFCTRL_FLUSH %d\n", a->partial);
 
       if (a->partial)
 	{			/* the complicated openpgp scheme */
@@ -1081,7 +1081,7 @@ log_info("block_filter %s\n", control_mode_str[control]);
     }
   else if (control == IOBUFCTRL_INIT)
     {
-                  log_info ("IOBUFCTRL_INIT %d\n", a->partial);
+         //.         log_info ("IOBUFCTRL_INIT %d\n", a->partial);
 
       if (DBG_IOBUF)
 	log_debug ("init block_filter %p\n", a);
@@ -1097,12 +1097,12 @@ log_info("block_filter %s\n", control_mode_str[control]);
     }
   else if (control == IOBUFCTRL_DESC)
     {
-      log_info ("IOBUFCTRL_DESC %d\n", a->partial);
+  //    log_info ("IOBUFCTRL_DESC %d\n", a->partial);
       mem2str (buf, "block_filter", *ret_len);
     }
   else if (control == IOBUFCTRL_FREE)
     {
-            log_info ("IOBUFCTRL_FREE %d\n", a->partial);
+       //     log_info ("IOBUFCTRL_FREE %d\n", a->partial);
 
       if (a->use == IOBUF_OUTPUT)
 	{			/* write the end markers */
@@ -1218,7 +1218,7 @@ iobuf_alloc (int use, size_t bufsize)
   iobuf_t a;
   static int number = 0;
 
-  log_assert (use == IOBUF_INPUT || use == IOBUF_INPUT_TEMP
+  log_info ("iobuf_alloc %d \n",use == IOBUF_INPUT || use == IOBUF_INPUT_TEMP
               || use == IOBUF_OUTPUT || use == IOBUF_OUTPUT_TEMP);
   if (bufsize == 0)
     {
@@ -1411,6 +1411,7 @@ do_open (const char *fname, int special_filenames,
     a->real_fname = xstrdup (fname);
   a->filter = file_filter;
   a->filter_ov = fcx;
+  log_info("Added");
   file_filter (fcx, IOBUFCTRL_INIT, NULL, NULL, &len);
   if (DBG_IOBUF)
     log_debug ("iobuf-%d.%d: open '%s' desc=%s fd=%d\n",
@@ -2128,6 +2129,7 @@ iobuf_readbyte (iobuf_t a)
 int
 iobuf_read (iobuf_t a, void *buffer, unsigned int buflen)
 {
+  log_info("iobuf_read %d a->nlimit %d\n",buflen,a->nlimit);
   unsigned char *buf = (unsigned char *)buffer;
   int c, n;
 
@@ -2522,9 +2524,9 @@ iobuf_get_fd (iobuf_t a)
   for (; a->chain; a = a->chain)
     ;
 
-  if (a->filter != file_filter)
+  if (a->filter != file_filter){
     return -1;
-
+  }
   {
     file_filter_ctx_t *b = a->filter_ov;
     gnupg_fd_t fp = b->fp;

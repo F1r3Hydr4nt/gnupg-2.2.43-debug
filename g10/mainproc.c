@@ -1611,7 +1611,7 @@ proc_signature_packets_by_fd (ctrl_t ctrl,
 int
 proc_encryption_packets (ctrl_t ctrl, void *anchor, iobuf_t a )
 {
-  log_info("proc_encryption_packets a->use: %d", a->use);
+  log_info("proc_encryption_packets a->use: %d, a->filter: %d", a->use, a->filter);
   CTX c = xmalloc_clear (sizeof *c);
   int rc;
 

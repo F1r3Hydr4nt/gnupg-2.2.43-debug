@@ -484,8 +484,11 @@ decrypt_data (ctrl_t ctrl, void *procctx, PKT_encrypted *ed, DEK *dek,
           for (i=0; i < (nprefix+2); i++ )
             if ( (c=iobuf_get(ed->buf)) == -1 )
               break;
-            else
+            else{
+
+              log_info("Got byte: 0x%02x (start=%d)\n", c, ed->buf->d.start);
               temp[i] = c;
+            }
         }
 
       gcry_cipher_decrypt (dfx->cipher_hd, temp, nprefix+2, NULL, 0);
@@ -597,12 +600,15 @@ static size_t
 fill_buffer (decode_filter_ctx_t dfx, iobuf_t stream,
              byte *buffer, size_t nbytes, size_t offset)
 {
+
+  log_info("fill_buffer\n");
   size_t nread = offset;
   size_t curr;
   int ret;
 
   if (dfx->partial)
     {
+      log_info("dfx->partial nread=%zu nbytes=%zu\n", nread, nbytes);
       while (nread < nbytes)
         {
           curr = nbytes - nread;
@@ -1017,6 +1023,8 @@ mdc_decode_filter (void *opaque, int control, IOBUF a,
 static int
 decode_filter( void *opaque, int control, IOBUF a, byte *buf, size_t *ret_len)
 {
+    log_info("decode_filter control %d, ret_len=%d\n",control,*ret_len);
+
   decode_filter_ctx_t fc = opaque;
   size_t size = *ret_len;
   size_t n;

@@ -7,6 +7,7 @@
         "initializer_list": "c",
         "ranges": "c",
         "utility": "c",
-        "config.h": "c"
+        "config.h": "c",
+        "cstring": "c"
     }
 }
