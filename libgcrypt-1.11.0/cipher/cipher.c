@@ -1327,7 +1327,7 @@ _gcry_cipher_decrypt (gcry_cipher_hd_t h, void *out, size_t outsize,
 static void
 cipher_sync (gcry_cipher_hd_t c)
 {
-  log_info("cipher_sync\n");
+  log_info("cipher_sync %d\n", c->unused);
   if ((c->flags & GCRY_CIPHER_ENABLE_SYNC) && c->unused)
     {
       memmove (c->u_iv.iv + c->unused,

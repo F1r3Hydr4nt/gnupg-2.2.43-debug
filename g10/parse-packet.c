@@ -823,14 +823,14 @@ log_info("Read CTB: 0x%02x (new_format=%d)", ctb, !!(ctb & 0x40));
 // Length parsing - new format
 log_info("Parsing new format packet length");
 log_info("First length byte: 0x%02x", c);
-log_info("One byte length: %lu", pktlen);
-log_info("Two byte length: %lu", pktlen);
-log_info("Four byte length: %lu", pktlen);
+// log_info("One byte length: %lu", pktlen);
+// log_info("Two byte length: %lu", pktlen);
+// log_info("Four byte length: %lu", pktlen);
 log_info("Partial length encoding: mode=0x%02x", c & 0xff);
 
 // Length parsing - old format
-log_info("Parsing old format length (lenbytes=%d)", lenbytes);
-log_info("Old format packet length: %lu", pktlen);
+// log_info("Parsing old format length (lenbytes=%d)", lenbytes);
+// log_info("Old format packet length: %lu", pktlen);
 
   /* Sometimes the decompressing layer enters an error state in which
      it simply outputs 0xff for every byte read.  If we have a stream
@@ -1023,13 +1023,13 @@ log_info("Processing packet type: %s (%d)",
       ctx->last_pkt = *pkt;
     }
 
-// Error conditions
-log_info("Attempted copy of partial packet");
-log_info("Invalid length byte at position %lu", (unsigned long)iobuf_tell(inp));
-log_info("Possible stream corruption detected (type=63, len=0xFFFFFFFF)");
+// // Error conditions
+// log_info("Attempted copy of partial packet");
+// log_info("Invalid length byte at position %lu", (unsigned long)iobuf_tell(inp));
+// log_info("Possible stream corruption detected (type=63, len=0xFFFFFFFF)");
 
-// Context updates
-log_info("Storing packet in context (type=%d, rc=%d)", pkttype, rc);
+// // Context updates
+// log_info("Storing packet in context (type=%d, rc=%d)", pkttype, rc);
 
 // Hex dumps
 log_info("Packet header (%d bytes):", hdrlen);

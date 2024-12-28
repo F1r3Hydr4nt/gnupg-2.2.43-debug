@@ -48,18 +48,18 @@
 
 /* USE_AMD64_ASM indicates whether to use AMD64 assembly code. */
 #undef USE_AMD64_ASM
-#if defined(__x86_64__) && (defined(HAVE_COMPATIBLE_GCC_AMD64_PLATFORM_AS) || \
-    defined(HAVE_COMPATIBLE_GCC_WIN64_PLATFORM_AS))
-# define USE_AMD64_ASM 1
-#endif
+// #if defined(__x86_64__) && (defined(HAVE_COMPATIBLE_GCC_AMD64_PLATFORM_AS) || \
+//     defined(HAVE_COMPATIBLE_GCC_WIN64_PLATFORM_AS))
+// # define USE_AMD64_ASM 1
+// #endif
 
 /* USE_ARM_ASM indicates whether to use ARM assembly code. */
 #undef USE_ARM_ASM
-#if defined(__ARMEL__)
-# ifdef HAVE_COMPATIBLE_GCC_ARM_PLATFORM_AS
-#  define USE_ARM_ASM 1
-# endif
-#endif
+// #if defined(__ARMEL__)
+// # ifdef HAVE_COMPATIBLE_GCC_ARM_PLATFORM_AS
+// #  define USE_ARM_ASM 1
+// # endif
+// #endif
 
 #define CAST5_BLOCKSIZE 8
 
@@ -919,6 +919,34 @@ _gcry_cast5_cbc_dec(void *context, unsigned char *iv, void *outbuf_arg,
   _gcry_burn_stack(burn_stack_depth);
 }
 
+static void hexdump(const char *desc, const void *data, size_t len) {
+    const unsigned char *buf = (const unsigned char*)data;
+    char hexbuf[2048] = {0};  // Adjust size as needed
+    int offset = 0;
+    
+    offset += snprintf(hexbuf + offset, sizeof(hexbuf) - offset, "%s: ", desc);
+    
+    for (size_t i = 0; i < len; i++) {
+        offset += snprintf(hexbuf + offset, sizeof(hexbuf) - offset, "%02x", buf[i]);
+    }
+    
+    log_info("%s\n", hexbuf);
+}
+
+static void ascii_dump(const char *desc, const unsigned char *data, size_t len) {
+    char asciibuf[2048] = {0};  // Adjust size as needed
+    int offset = 0;
+    
+    offset += snprintf(asciibuf + offset, sizeof(asciibuf) - offset, "%s: ", desc);
+    
+    for (size_t i = 0; i < len; i++) {
+        unsigned char c = data[i];
+        offset += snprintf(asciibuf + offset, sizeof(asciibuf) - offset, "%c", 
+                         (c >= 32 && c <= 126) ? c : '.');
+    }
+    
+    log_info("%s\n", asciibuf);
+}
 /* Bulk decryption of complete blocks in CFB mode.  This function is only
    intended for the bulk encryption feature of cipher.c. */
 static void
@@ -930,55 +958,65 @@ _gcry_cast5_cfb_dec(void *context, unsigned char *iv, void *outbuf_arg,
   const unsigned char *inbuf = inbuf_arg;
   unsigned char tmpbuf[CAST5_BLOCKSIZE * 3];
   int burn_stack_depth = (20 + 4 * sizeof(void*)) + 4 * CAST5_BLOCKSIZE;
+    log_info("nblocks: %d", nblocks);
+    // hexdump("Input buffer", inbuf_arg, nblocks * CAST5_BLOCKSIZE);
+    hexdump("_gcry_cast5_cfb_dec, IV", iv, CAST5_BLOCKSIZE);
+    int debugCount = 20;
+// #ifdef USE_AMD64_ASM
+//   {
+//     if (nblocks >= 4)
+//       burn_stack_depth += 8 * sizeof(void*);
 
-#ifdef USE_AMD64_ASM
-  {
-    if (nblocks >= 4)
-      burn_stack_depth += 8 * sizeof(void*);
+//     /* Process data in 4 block chunks. */
+//     while (nblocks >= 4)
+//       {
+//         cast5_amd64_cfb_dec(ctx, outbuf, inbuf, iv);
 
-    /* Process data in 4 block chunks. */
-    while (nblocks >= 4)
-      {
-        cast5_amd64_cfb_dec(ctx, outbuf, inbuf, iv);
+//         nblocks -= 4;
+//         outbuf += 4 * CAST5_BLOCKSIZE;
+//         inbuf  += 4 * CAST5_BLOCKSIZE;
+//       }
 
-        nblocks -= 4;
-        outbuf += 4 * CAST5_BLOCKSIZE;
-        inbuf  += 4 * CAST5_BLOCKSIZE;
-      }
+//     /* Use generic code to handle smaller chunks... */
+//   }
+// #elif defined(USE_ARM_ASM)
+//   {
+//     /* Process data in 2 block chunks. */
+//     while (nblocks >= 2)
+//       {
+//         _gcry_cast5_arm_cfb_dec(ctx, outbuf, inbuf, iv);
 
-    /* Use generic code to handle smaller chunks... */
-  }
-#elif defined(USE_ARM_ASM)
-  {
-    /* Process data in 2 block chunks. */
-    while (nblocks >= 2)
-      {
-        _gcry_cast5_arm_cfb_dec(ctx, outbuf, inbuf, iv);
+//         nblocks -= 2;
+//         outbuf += 2 * CAST5_BLOCKSIZE;
+//         inbuf  += 2 * CAST5_BLOCKSIZE;
+//       }
 
-        nblocks -= 2;
-        outbuf += 2 * CAST5_BLOCKSIZE;
-        inbuf  += 2 * CAST5_BLOCKSIZE;
-      }
+//     /* Use generic code to handle smaller chunks... */
+//   }
+// #endif
 
-    /* Use generic code to handle smaller chunks... */
-  }
-#endif
-
-#if !defined(USE_AMD64_ASM) && !defined(USE_ARM_ASM)
+// #if !defined(USE_AMD64_ASM) && !defined(USE_ARM_ASM)
   for ( ;nblocks >= 3; nblocks -= 3 )
     {
+       if(debugCount>=0) hexdump("3 Blocks IN", inbuf, CAST5_BLOCKSIZE*3);
       cipher_block_cpy (tmpbuf + 0, iv, CAST5_BLOCKSIZE);
       cipher_block_cpy (tmpbuf + 8, inbuf + 0, CAST5_BLOCKSIZE * 2);
       cipher_block_cpy (iv, inbuf + 16, CAST5_BLOCKSIZE);
       do_encrypt_block_3 (ctx, tmpbuf, tmpbuf);
       buf_xor (outbuf, inbuf, tmpbuf, CAST5_BLOCKSIZE * 3);
+      if(debugCount>=0){
+          // hexdump("3 Blocks Decry", outbuf, CAST5_BLOCKSIZE * 3);
+          ascii_dump("3 Block OUT", outbuf, CAST5_BLOCKSIZE * 3);
+      }
       outbuf += CAST5_BLOCKSIZE * 3;
       inbuf  += CAST5_BLOCKSIZE * 3;
+        debugCount--;
     }
-#endif
+// #endif
 
   for ( ;nblocks; nblocks-- )
     {
+      // hexdump("Block", inbuf, CAST5_BLOCKSIZE);
       do_encrypt_block(ctx, iv, iv);
       cipher_block_xor_n_copy(outbuf, iv, inbuf, CAST5_BLOCKSIZE);
       outbuf += CAST5_BLOCKSIZE;

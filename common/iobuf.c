@@ -1423,12 +1423,14 @@ do_open (const char *fname, int special_filenames,
 iobuf_t
 iobuf_open (const char *fname)
 {
+  log_info("iobuf_open %s", fname);
   return do_open (fname, 1, IOBUF_INPUT, "rb", 0);
 }
 
 iobuf_t
 iobuf_create (const char *fname, int mode700)
 {
+  log_info("iobuf_create %s", fname);
   return do_open (fname, 1, IOBUF_OUTPUT, "wb", mode700);
 }
 

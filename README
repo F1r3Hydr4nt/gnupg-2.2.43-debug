@@ -276,4 +276,7 @@ cat loremIpsum.100k.txt | ./g10/gpg --symmetric --cipher-algo CAST5 --passphrase
 
 To C files:
  xxd -i encrypted.100k.gpg > encrypted.100k.h
+
+ Running and viewing decrypted ascii in-place while streaming:
+ make && cat encrypted.1k.gpg |./g10/gpg --batch --no-tty --passphrase "password" --decrypt --ignore-mdc-error
  ...
