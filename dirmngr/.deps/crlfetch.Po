@@ -28,8 +28,8 @@ crlfetch.o: crlfetch.c /usr/include/stdc-predef.h ../config.h \
  /usr/include/x86_64-linux-gnu/bits/errno.h /usr/include/linux/errno.h \
  /usr/include/x86_64-linux-gnu/asm/errno.h \
  /usr/include/asm-generic/errno.h /usr/include/asm-generic/errno-base.h \
- /usr/include/x86_64-linux-gnu/bits/types/error_t.h \
- /usr/local/include/npth.h /usr/include/x86_64-linux-gnu/sys/types.h \
+ /usr/include/x86_64-linux-gnu/bits/types/error_t.h /usr/include/npth.h \
+ /usr/include/x86_64-linux-gnu/sys/types.h \
  /usr/include/x86_64-linux-gnu/bits/types/clock_t.h \
  /usr/include/x86_64-linux-gnu/bits/types/clockid_t.h \
  /usr/include/x86_64-linux-gnu/bits/types/time_t.h \
@@ -122,7 +122,7 @@ crlfetch.o: crlfetch.c /usr/include/stdc-predef.h ../config.h \
  /usr/include/strings.h \
  /usr/include/x86_64-linux-gnu/bits/strings_fortified.h \
  /usr/include/x86_64-linux-gnu/bits/string_fortified.h \
- /usr/local/include/ksba.h ../common/util.h ../common/../common/logging.h \
+ /usr/include/ksba.h ../common/util.h ../common/../common/logging.h \
  ../common/../common/mischelp.h ../common/../common/w32help.h \
  ../common/../common/argparse.h ../common/../common/stringhelp.h \
  /usr/lib/gcc/x86_64-linux-gnu/11/include/stdint.h /usr/include/stdint.h \
@@ -186,7 +186,7 @@ crlfetch.o: crlfetch.c /usr/include/stdc-predef.h ../config.h \
 /usr/include/asm-generic/errno.h:
 /usr/include/asm-generic/errno-base.h:
 /usr/include/x86_64-linux-gnu/bits/types/error_t.h:
-/usr/local/include/npth.h:
+/usr/include/npth.h:
 /usr/include/x86_64-linux-gnu/sys/types.h:
 /usr/include/x86_64-linux-gnu/bits/types/clock_t.h:
 /usr/include/x86_64-linux-gnu/bits/types/clockid_t.h:
@@ -293,7 +293,7 @@ dirmngr-err.h:
 /usr/include/strings.h:
 /usr/include/x86_64-linux-gnu/bits/strings_fortified.h:
 /usr/include/x86_64-linux-gnu/bits/string_fortified.h:
-/usr/local/include/ksba.h:
+/usr/include/ksba.h:
 ../common/util.h:
 ../common/../common/logging.h:
 ../common/../common/mischelp.h:

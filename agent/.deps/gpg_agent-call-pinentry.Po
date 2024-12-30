@@ -109,7 +109,7 @@ gpg_agent-call-pinentry.o: call-pinentry.c /usr/include/stdc-predef.h \
  /usr/include/x86_64-linux-gnu/bits/sigthread.h \
  /usr/include/x86_64-linux-gnu/bits/signal_ext.h \
  /usr/include/x86_64-linux-gnu/sys/utsname.h \
- /usr/include/x86_64-linux-gnu/bits/utsname.h /usr/local/include/npth.h \
+ /usr/include/x86_64-linux-gnu/bits/utsname.h /usr/include/npth.h \
  /usr/include/x86_64-linux-gnu/sys/time.h /usr/include/time.h \
  /usr/include/x86_64-linux-gnu/bits/time.h \
  /usr/include/x86_64-linux-gnu/bits/timex.h \
@@ -278,7 +278,7 @@ gpg_agent-call-pinentry.o: call-pinentry.c /usr/include/stdc-predef.h \
 /usr/include/x86_64-linux-gnu/bits/signal_ext.h:
 /usr/include/x86_64-linux-gnu/sys/utsname.h:
 /usr/include/x86_64-linux-gnu/bits/utsname.h:
-/usr/local/include/npth.h:
+/usr/include/npth.h:
 /usr/include/x86_64-linux-gnu/sys/time.h:
 /usr/include/time.h:
 /usr/include/x86_64-linux-gnu/bits/time.h:

@@ -103,12 +103,7 @@ t_http_basic-http.o: http.c /usr/include/stdc-predef.h ../config.h \
  /usr/include/netdb.h /usr/include/rpc/netdb.h \
  /usr/include/x86_64-linux-gnu/bits/types/sigevent_t.h \
  /usr/include/x86_64-linux-gnu/bits/types/__sigval_t.h \
- /usr/include/x86_64-linux-gnu/bits/netdb.h /usr/include/gnutls/gnutls.h \
- /usr/include/x86_64-linux-gnu/sys/uio.h \
- /usr/include/x86_64-linux-gnu/bits/uio_lim.h \
- /usr/include/x86_64-linux-gnu/bits/uio-ext.h \
- /usr/include/gnutls/compat.h /usr/include/gnutls/x509.h \
- /usr/include/gnutls/pkcs7.h /usr/local/include/assuan.h \
+ /usr/include/x86_64-linux-gnu/bits/netdb.h /usr/local/include/assuan.h \
  /usr/local/include/gpg-error.h ../common/util.h \
  /usr/local/include/gcrypt.h ../common/../common/logging.h \
  ../common/../common/mischelp.h ../common/../common/w32help.h \
@@ -254,13 +249,6 @@ t_http_basic-http.o: http.c /usr/include/stdc-predef.h ../config.h \
 /usr/include/x86_64-linux-gnu/bits/types/sigevent_t.h:
 /usr/include/x86_64-linux-gnu/bits/types/__sigval_t.h:
 /usr/include/x86_64-linux-gnu/bits/netdb.h:
-/usr/include/gnutls/gnutls.h:
-/usr/include/x86_64-linux-gnu/sys/uio.h:
-/usr/include/x86_64-linux-gnu/bits/uio_lim.h:
-/usr/include/x86_64-linux-gnu/bits/uio-ext.h:
-/usr/include/gnutls/compat.h:
-/usr/include/gnutls/x509.h:
-/usr/include/gnutls/pkcs7.h:
 /usr/local/include/assuan.h:
 /usr/local/include/gpg-error.h:
 ../common/util.h:

@@ -117,8 +117,8 @@ scdaemon.o: scdaemon.c /usr/include/stdc-predef.h ../config.h \
  /usr/include/x86_64-linux-gnu/bits/ss_flags.h \
  /usr/include/x86_64-linux-gnu/bits/types/struct_sigstack.h \
  /usr/include/x86_64-linux-gnu/bits/sigthread.h \
- /usr/include/x86_64-linux-gnu/bits/signal_ext.h \
- /usr/local/include/npth.h /usr/include/x86_64-linux-gnu/sys/wait.h \
+ /usr/include/x86_64-linux-gnu/bits/signal_ext.h /usr/include/npth.h \
+ /usr/include/x86_64-linux-gnu/sys/wait.h \
  /usr/include/x86_64-linux-gnu/sys/time.h /usr/include/pthread.h \
  /usr/include/sched.h /usr/include/x86_64-linux-gnu/bits/sched.h \
  /usr/include/x86_64-linux-gnu/bits/types/struct_sched_param.h \
@@ -148,7 +148,7 @@ scdaemon.o: scdaemon.c /usr/include/stdc-predef.h ../config.h \
  /usr/include/x86_64-linux-gnu/bits/statx-generic.h \
  /usr/include/x86_64-linux-gnu/bits/types/struct_statx_timestamp.h \
  /usr/include/x86_64-linux-gnu/bits/types/struct_statx.h app-common.h \
- /usr/local/include/ksba.h /usr/local/include/assuan.h ../common/i18n.h \
+ /usr/include/ksba.h /usr/local/include/assuan.h ../common/i18n.h \
  /usr/include/locale.h /usr/include/x86_64-linux-gnu/bits/locale.h \
  /usr/include/libintl.h iso7816.h apdu.h ccid-driver.h \
  ../common/gc-opt-flags.h ../common/asshelp.h ../common/session-env.h \
@@ -289,7 +289,7 @@ scdaemon.o: scdaemon.c /usr/include/stdc-predef.h ../config.h \
 /usr/include/x86_64-linux-gnu/bits/types/struct_sigstack.h:
 /usr/include/x86_64-linux-gnu/bits/sigthread.h:
 /usr/include/x86_64-linux-gnu/bits/signal_ext.h:
-/usr/local/include/npth.h:
+/usr/include/npth.h:
 /usr/include/x86_64-linux-gnu/sys/wait.h:
 /usr/include/x86_64-linux-gnu/sys/time.h:
 /usr/include/pthread.h:
@@ -338,7 +338,7 @@ scdaemon.h:
 /usr/include/x86_64-linux-gnu/bits/types/struct_statx_timestamp.h:
 /usr/include/x86_64-linux-gnu/bits/types/struct_statx.h:
 app-common.h:
-/usr/local/include/ksba.h:
+/usr/include/ksba.h:
 /usr/local/include/assuan.h:
 ../common/i18n.h:
 /usr/include/locale.h:

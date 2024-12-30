@@ -91,8 +91,8 @@ command.o: command.c /usr/include/stdc-predef.h ../config.h \
  /usr/include/x86_64-linux-gnu/bits/ss_flags.h \
  /usr/include/x86_64-linux-gnu/bits/types/struct_sigstack.h \
  /usr/include/x86_64-linux-gnu/bits/sigthread.h \
- /usr/include/x86_64-linux-gnu/bits/signal_ext.h \
- /usr/local/include/npth.h /usr/include/x86_64-linux-gnu/sys/wait.h \
+ /usr/include/x86_64-linux-gnu/bits/signal_ext.h /usr/include/npth.h \
+ /usr/include/x86_64-linux-gnu/sys/wait.h \
  /usr/include/x86_64-linux-gnu/sys/time.h /usr/include/time.h \
  /usr/include/x86_64-linux-gnu/bits/time.h \
  /usr/include/x86_64-linux-gnu/bits/timex.h \
@@ -145,8 +145,8 @@ command.o: command.c /usr/include/stdc-predef.h ../config.h \
  /usr/include/x86_64-linux-gnu/bits/statx-generic.h \
  /usr/include/x86_64-linux-gnu/bits/types/struct_statx_timestamp.h \
  /usr/include/x86_64-linux-gnu/bits/types/struct_statx.h app-common.h \
- /usr/local/include/ksba.h /usr/local/include/assuan.h iso7816.h apdu.h \
- atr.h ../common/asshelp.h ../common/session-env.h ../common/util.h \
+ /usr/include/ksba.h /usr/local/include/assuan.h iso7816.h apdu.h atr.h \
+ ../common/asshelp.h ../common/session-env.h ../common/util.h \
  ../common/server-help.h
 /usr/include/stdc-predef.h:
 ../config.h:
@@ -253,7 +253,7 @@ command.o: command.c /usr/include/stdc-predef.h ../config.h \
 /usr/include/x86_64-linux-gnu/bits/types/struct_sigstack.h:
 /usr/include/x86_64-linux-gnu/bits/sigthread.h:
 /usr/include/x86_64-linux-gnu/bits/signal_ext.h:
-/usr/local/include/npth.h:
+/usr/include/npth.h:
 /usr/include/x86_64-linux-gnu/sys/wait.h:
 /usr/include/x86_64-linux-gnu/sys/time.h:
 /usr/include/time.h:
@@ -327,7 +327,7 @@ scdaemon.h:
 /usr/include/x86_64-linux-gnu/bits/types/struct_statx_timestamp.h:
 /usr/include/x86_64-linux-gnu/bits/types/struct_statx.h:
 app-common.h:
-/usr/local/include/ksba.h:
+/usr/include/ksba.h:
 /usr/local/include/assuan.h:
 iso7816.h:
 apdu.h:

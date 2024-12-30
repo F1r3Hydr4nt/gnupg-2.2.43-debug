@@ -930,23 +930,16 @@ static void hexdump(const char *desc, const void *data, size_t len) {
         offset += snprintf(hexbuf + offset, sizeof(hexbuf) - offset, "%02x", buf[i]);
     }
     
-    log_info("%s\n", hexbuf);
+    log_debug("%s\n", hexbuf);
 }
 
-static void ascii_dump(const char *desc, const unsigned char *data, size_t len) {
-    char asciibuf[2048] = {0};  // Adjust size as needed
-    int offset = 0;
-    
-    offset += snprintf(asciibuf + offset, sizeof(asciibuf) - offset, "%s: ", desc);
-    
+static void ascii_dump(const unsigned char *data, size_t len) {
+    // Print the data directly, allowing special characters to be interpreted
     for (size_t i = 0; i < len; i++) {
-        unsigned char c = data[i];
-        offset += snprintf(asciibuf + offset, sizeof(asciibuf) - offset, "%c", 
-                         (c >= 32 && c <= 126) ? c : '.');
-    }
-    
-    log_info("%s\n", asciibuf);
+        log_printf("%c", data[i]);
+    }        
 }
+
 /* Bulk decryption of complete blocks in CFB mode.  This function is only
    intended for the bulk encryption feature of cipher.c. */
 static void
@@ -958,7 +951,8 @@ _gcry_cast5_cfb_dec(void *context, unsigned char *iv, void *outbuf_arg,
   const unsigned char *inbuf = inbuf_arg;
   unsigned char tmpbuf[CAST5_BLOCKSIZE * 3];
   int burn_stack_depth = (20 + 4 * sizeof(void*)) + 4 * CAST5_BLOCKSIZE;
-    log_info("nblocks: %d", nblocks);
+    log_info("nblocks: %lu", nblocks);
+    
     // hexdump("Input buffer", inbuf_arg, nblocks * CAST5_BLOCKSIZE);
     hexdump("_gcry_cast5_cfb_dec, IV", iv, CAST5_BLOCKSIZE);
     int debugCount = 20;
@@ -998,16 +992,16 @@ _gcry_cast5_cfb_dec(void *context, unsigned char *iv, void *outbuf_arg,
 // #if !defined(USE_AMD64_ASM) && !defined(USE_ARM_ASM)
   for ( ;nblocks >= 3; nblocks -= 3 )
     {
-       if(debugCount>=0) hexdump("3 Blocks IN", inbuf, CAST5_BLOCKSIZE*3);
+       // if(debugCount>=0) hexdump("3 Blocks IN", inbuf, CAST5_BLOCKSIZE*3);
       cipher_block_cpy (tmpbuf + 0, iv, CAST5_BLOCKSIZE);
       cipher_block_cpy (tmpbuf + 8, inbuf + 0, CAST5_BLOCKSIZE * 2);
       cipher_block_cpy (iv, inbuf + 16, CAST5_BLOCKSIZE);
       do_encrypt_block_3 (ctx, tmpbuf, tmpbuf);
       buf_xor (outbuf, inbuf, tmpbuf, CAST5_BLOCKSIZE * 3);
-      if(debugCount>=0){
+      // if(debugCount>=0){
           // hexdump("3 Blocks Decry", outbuf, CAST5_BLOCKSIZE * 3);
-          ascii_dump("3 Block OUT", outbuf, CAST5_BLOCKSIZE * 3);
-      }
+          ascii_dump(outbuf, CAST5_BLOCKSIZE * 3);
+      // }
       outbuf += CAST5_BLOCKSIZE * 3;
       inbuf  += CAST5_BLOCKSIZE * 3;
         debugCount--;
@@ -1016,9 +1010,9 @@ _gcry_cast5_cfb_dec(void *context, unsigned char *iv, void *outbuf_arg,
 
   for ( ;nblocks; nblocks-- )
     {
-      // hexdump("Block", inbuf, CAST5_BLOCKSIZE);
       do_encrypt_block(ctx, iv, iv);
       cipher_block_xor_n_copy(outbuf, iv, inbuf, CAST5_BLOCKSIZE);
+      ascii_dump(outbuf, CAST5_BLOCKSIZE * 3);
       outbuf += CAST5_BLOCKSIZE;
       inbuf  += CAST5_BLOCKSIZE;
     }

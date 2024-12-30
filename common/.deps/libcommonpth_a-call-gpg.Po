@@ -78,9 +78,8 @@ libcommonpth_a-call-gpg.o: call-gpg.c /usr/include/stdc-predef.h \
  /usr/include/x86_64-linux-gnu/bits/errno.h /usr/include/linux/errno.h \
  /usr/include/x86_64-linux-gnu/asm/errno.h \
  /usr/include/asm-generic/errno.h /usr/include/asm-generic/errno-base.h \
- /usr/include/x86_64-linux-gnu/bits/types/error_t.h \
- /usr/local/include/npth.h /usr/include/x86_64-linux-gnu/sys/wait.h \
- /usr/include/signal.h \
+ /usr/include/x86_64-linux-gnu/bits/types/error_t.h /usr/include/npth.h \
+ /usr/include/x86_64-linux-gnu/sys/wait.h /usr/include/signal.h \
  /usr/include/x86_64-linux-gnu/bits/signum-generic.h \
  /usr/include/x86_64-linux-gnu/bits/signum-arch.h \
  /usr/include/x86_64-linux-gnu/bits/types/sig_atomic_t.h \
@@ -227,7 +226,7 @@ libcommonpth_a-call-gpg.o: call-gpg.c /usr/include/stdc-predef.h \
 /usr/include/asm-generic/errno.h:
 /usr/include/asm-generic/errno-base.h:
 /usr/include/x86_64-linux-gnu/bits/types/error_t.h:
-/usr/local/include/npth.h:
+/usr/include/npth.h:
 /usr/include/x86_64-linux-gnu/sys/wait.h:
 /usr/include/signal.h:
 /usr/include/x86_64-linux-gnu/bits/signum-generic.h:

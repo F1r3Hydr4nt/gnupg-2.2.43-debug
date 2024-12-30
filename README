@@ -280,3 +280,18 @@ To C files:
  Running and viewing decrypted ascii in-place while streaming:
  make && cat encrypted.1k.gpg |./g10/gpg --batch --no-tty --passphrase "password" --decrypt --ignore-mdc-error
  ...
+
+
+ libgcrypt:
+ make clean
+./configure --libdir=/lib/x86_64-linux-gnu
+make
+sudo make install
+
+sudo ldconfig
+Then verify the library location:
+bash
+
+ldd ./g10/gpg | grep gcrypt
+
+make && cat encrypted.1k.gpg |./g10/gpg --debug-level guru --batch --no-tty --passphrase "password" --decrypt --ignore-mdc-error

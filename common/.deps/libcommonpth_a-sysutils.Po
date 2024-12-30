@@ -109,7 +109,7 @@ libcommonpth_a-sysutils.o: sysutils.c /usr/include/stdc-predef.h \
  /usr/include/x86_64-linux-gnu/bits/socket2.h \
  /usr/include/x86_64-linux-gnu/sys/un.h \
  /usr/include/x86_64-linux-gnu/sys/inotify.h \
- /usr/include/x86_64-linux-gnu/bits/inotify.h /usr/local/include/npth.h \
+ /usr/include/x86_64-linux-gnu/bits/inotify.h /usr/include/npth.h \
  /usr/include/x86_64-linux-gnu/sys/wait.h /usr/include/signal.h \
  /usr/include/x86_64-linux-gnu/bits/signum-generic.h \
  /usr/include/x86_64-linux-gnu/bits/signum-arch.h \
@@ -286,7 +286,7 @@ libcommonpth_a-sysutils.o: sysutils.c /usr/include/stdc-predef.h \
 /usr/include/x86_64-linux-gnu/sys/un.h:
 /usr/include/x86_64-linux-gnu/sys/inotify.h:
 /usr/include/x86_64-linux-gnu/bits/inotify.h:
-/usr/local/include/npth.h:
+/usr/include/npth.h:
 /usr/include/x86_64-linux-gnu/sys/wait.h:
 /usr/include/signal.h:
 /usr/include/x86_64-linux-gnu/bits/signum-generic.h:

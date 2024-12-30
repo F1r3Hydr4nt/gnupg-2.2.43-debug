@@ -77,7 +77,7 @@ libcommonpth_a-audit.o: audit.c /usr/include/stdc-predef.h ../config.h \
  /usr/include/x86_64-linux-gnu/bits/types/struct_tm.h \
  /usr/include/x86_64-linux-gnu/bits/types/struct_itimerspec.h i18n.h \
  /usr/include/locale.h /usr/include/x86_64-linux-gnu/bits/locale.h \
- /usr/include/libintl.h audit.h /usr/local/include/ksba.h audit-events.h
+ /usr/include/libintl.h audit.h /usr/include/ksba.h audit-events.h
 /usr/include/stdc-predef.h:
 ../config.h:
 /usr/include/stdlib.h:
@@ -187,5 +187,5 @@ i18n.h:
 /usr/include/x86_64-linux-gnu/bits/locale.h:
 /usr/include/libintl.h:
 audit.h:
-/usr/local/include/ksba.h:
+/usr/include/ksba.h:
 audit-events.h:

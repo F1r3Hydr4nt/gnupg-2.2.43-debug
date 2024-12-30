@@ -103,7 +103,7 @@ http.o: http.c /usr/include/stdc-predef.h ../config.h \
  /usr/include/netdb.h /usr/include/rpc/netdb.h \
  /usr/include/x86_64-linux-gnu/bits/types/sigevent_t.h \
  /usr/include/x86_64-linux-gnu/bits/types/__sigval_t.h \
- /usr/include/x86_64-linux-gnu/bits/netdb.h /usr/local/include/npth.h \
+ /usr/include/x86_64-linux-gnu/bits/netdb.h /usr/include/npth.h \
  /usr/include/x86_64-linux-gnu/sys/wait.h /usr/include/signal.h \
  /usr/include/x86_64-linux-gnu/bits/signum-generic.h \
  /usr/include/x86_64-linux-gnu/bits/signum-arch.h \
@@ -130,15 +130,11 @@ http.o: http.c /usr/include/stdc-predef.h ../config.h \
  /usr/include/x86_64-linux-gnu/bits/setjmp.h \
  /usr/include/x86_64-linux-gnu/bits/types/struct___jmp_buf_tag.h \
  /usr/include/x86_64-linux-gnu/bits/pthread_stack_min-dynamic.h \
- /usr/include/gnutls/gnutls.h /usr/include/x86_64-linux-gnu/sys/uio.h \
- /usr/include/x86_64-linux-gnu/bits/uio_lim.h \
- /usr/include/x86_64-linux-gnu/bits/uio-ext.h \
- /usr/include/gnutls/compat.h /usr/include/gnutls/x509.h \
- /usr/include/gnutls/pkcs7.h /usr/local/include/assuan.h \
- /usr/local/include/gpg-error.h ../common/util.h \
- /usr/local/include/gcrypt.h ../common/../common/logging.h \
- ../common/../common/mischelp.h ../common/../common/w32help.h \
- ../common/../common/argparse.h ../common/../common/stringhelp.h \
+ /usr/local/include/assuan.h /usr/local/include/gpg-error.h \
+ ../common/util.h /usr/local/include/gcrypt.h \
+ ../common/../common/logging.h ../common/../common/mischelp.h \
+ ../common/../common/w32help.h ../common/../common/argparse.h \
+ ../common/../common/stringhelp.h \
  /usr/lib/gcc/x86_64-linux-gnu/11/include/stdint.h /usr/include/stdint.h \
  /usr/include/x86_64-linux-gnu/bits/wchar.h ../common/../common/types.h \
  /usr/include/inttypes.h ../common/../common/mischelp.h \
@@ -280,7 +276,7 @@ http.o: http.c /usr/include/stdc-predef.h ../config.h \
 /usr/include/x86_64-linux-gnu/bits/types/sigevent_t.h:
 /usr/include/x86_64-linux-gnu/bits/types/__sigval_t.h:
 /usr/include/x86_64-linux-gnu/bits/netdb.h:
-/usr/local/include/npth.h:
+/usr/include/npth.h:
 /usr/include/x86_64-linux-gnu/sys/wait.h:
 /usr/include/signal.h:
 /usr/include/x86_64-linux-gnu/bits/signum-generic.h:
@@ -310,13 +306,6 @@ http.o: http.c /usr/include/stdc-predef.h ../config.h \
 /usr/include/x86_64-linux-gnu/bits/setjmp.h:
 /usr/include/x86_64-linux-gnu/bits/types/struct___jmp_buf_tag.h:
 /usr/include/x86_64-linux-gnu/bits/pthread_stack_min-dynamic.h:
-/usr/include/gnutls/gnutls.h:
-/usr/include/x86_64-linux-gnu/sys/uio.h:
-/usr/include/x86_64-linux-gnu/bits/uio_lim.h:
-/usr/include/x86_64-linux-gnu/bits/uio-ext.h:
-/usr/include/gnutls/compat.h:
-/usr/include/gnutls/x509.h:
-/usr/include/gnutls/pkcs7.h:
 /usr/local/include/assuan.h:
 /usr/local/include/gpg-error.h:
 ../common/util.h:

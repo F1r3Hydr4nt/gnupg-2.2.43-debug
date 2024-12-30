@@ -64,7 +64,7 @@ ks-engine-kdns.o: ks-engine-kdns.c /usr/include/stdc-predef.h ../config.h \
  /usr/include/x86_64-linux-gnu/asm/errno.h \
  /usr/include/asm-generic/errno.h /usr/include/asm-generic/errno-base.h \
  /usr/include/x86_64-linux-gnu/bits/types/error_t.h \
- /usr/local/include/gcrypt.h /usr/local/include/ksba.h ../common/util.h \
+ /usr/local/include/gcrypt.h /usr/include/ksba.h ../common/util.h \
  ../common/../common/logging.h ../common/../common/mischelp.h \
  ../common/../common/w32help.h ../common/../common/argparse.h \
  ../common/../common/stringhelp.h \
@@ -202,7 +202,7 @@ dirmngr-err.h:
 /usr/include/asm-generic/errno-base.h:
 /usr/include/x86_64-linux-gnu/bits/types/error_t.h:
 /usr/local/include/gcrypt.h:
-/usr/local/include/ksba.h:
+/usr/include/ksba.h:
 ../common/util.h:
 ../common/../common/logging.h:
 ../common/../common/mischelp.h:

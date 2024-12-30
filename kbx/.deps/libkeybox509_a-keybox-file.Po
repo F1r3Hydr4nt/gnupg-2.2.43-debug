@@ -97,7 +97,7 @@ libkeybox509_a-keybox-file.o: keybox-file.c /usr/include/stdc-predef.h \
  /usr/include/x86_64-linux-gnu/bits/statx-generic.h \
  /usr/include/x86_64-linux-gnu/bits/types/struct_statx_timestamp.h \
  /usr/include/x86_64-linux-gnu/bits/types/struct_statx.h \
- keybox-search-desc.h /usr/local/include/ksba.h
+ keybox-search-desc.h /usr/include/ksba.h
 /usr/include/stdc-predef.h:
 ../config.h:
 /usr/include/stdlib.h:
@@ -226,4 +226,4 @@ keybox.h:
 /usr/include/x86_64-linux-gnu/bits/types/struct_statx_timestamp.h:
 /usr/include/x86_64-linux-gnu/bits/types/struct_statx.h:
 keybox-search-desc.h:
-/usr/local/include/ksba.h:
+/usr/include/ksba.h:

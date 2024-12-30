@@ -434,7 +434,7 @@ Copyright (C) 2021 Free Software Foundation, Inc.
 This config.status script is free software; the Free Software Foundation
 gives unlimited permission to copy, distribute and modify it."
 
-ac_pwd='/home/freddie/Downloads/libgcrypt-1.11.0'
+ac_pwd='/home/fred/code/gnupg-2.2.43-debug/libgcrypt-1.11.0'
 srcdir='.'
 INSTALL='/usr/bin/install -c'
 MKDIR_P='/usr/bin/mkdir -p'
@@ -673,7 +673,7 @@ finish_cmds='PATH="\$PATH:/sbin" ldconfig -n $libdir'
 finish_eval=''
 hardcode_into_libs='yes'
 sys_lib_search_path_spec='/usr/lib/gcc/x86_64-linux-gnu/11 /usr/lib/x86_64-linux-gnu /usr/lib /lib/x86_64-linux-gnu /lib '
-sys_lib_dlsearch_path_spec='/lib /usr/lib /usr/lib/x86_64-linux-gnu/libfakeroot /usr/local/lib /usr/local/lib/x86_64-linux-gnu /lib/x86_64-linux-gnu /usr/lib/x86_64-linux-gnu '
+sys_lib_dlsearch_path_spec='/lib /usr/lib /usr/lib/x86_64-linux-gnu/libfakeroot /usr/local/lib/i386-linux-gnu /lib/i386-linux-gnu /usr/lib/i386-linux-gnu /usr/local/lib/i686-linux-gnu /lib/i686-linux-gnu /usr/lib/i686-linux-gnu /usr/local/lib /usr/local/lib/x86_64-linux-gnu /lib/x86_64-linux-gnu /usr/lib/x86_64-linux-gnu /lib32 /usr/lib32 '
 hardcode_action='immediate'
 enable_dlopen='unknown'
 enable_dlopen_self='unknown'
@@ -972,8 +972,8 @@ S["MPI_MOD_ASM_MPIH_SUB1_TRUE"]=""
 S["MPI_MOD_ASM_MPIH_ADD1_FALSE"]="#"
 S["MPI_MOD_ASM_MPIH_ADD1_TRUE"]=""
 S["MPI_SFLAGS"]=""
-S["USE_GPGRT_CONFIG_FALSE"]=""
-S["USE_GPGRT_CONFIG_TRUE"]="#"
+S["USE_GPGRT_CONFIG_FALSE"]="#"
+S["USE_GPGRT_CONFIG_TRUE"]=""
 S["GPG_ERROR_MT_LIBS"]="-L/usr/local/lib -lgpg-error "
 S["GPG_ERROR_MT_CFLAGS"]="-I/usr/local/include "
 S["GPG_ERROR_LIBS"]="-L/usr/local/lib -lgpg-error"
@@ -1077,12 +1077,12 @@ S["mkdir_p"]="$(MKDIR_P)"
 S["MKDIR_P"]="/usr/bin/mkdir -p"
 S["INSTALL_STRIP_PROGRAM"]="$(install_sh) -c -s"
 S["STRIP"]="strip"
-S["install_sh"]="${SHELL} /home/freddie/Downloads/libgcrypt-1.11.0/build-aux/install-sh"
-S["MAKEINFO"]="${SHELL} '/home/freddie/Downloads/libgcrypt-1.11.0/build-aux/missing' makeinfo"
-S["AUTOHEADER"]="${SHELL} '/home/freddie/Downloads/libgcrypt-1.11.0/build-aux/missing' autoheader"
-S["AUTOMAKE"]="${SHELL} '/home/freddie/Downloads/libgcrypt-1.11.0/build-aux/missing' automake-1.16"
-S["AUTOCONF"]="${SHELL} '/home/freddie/Downloads/libgcrypt-1.11.0/build-aux/missing' autoconf"
-S["ACLOCAL"]="${SHELL} '/home/freddie/Downloads/libgcrypt-1.11.0/build-aux/missing' aclocal-1.16"
+S["install_sh"]="${SHELL} /home/fred/code/gnupg-2.2.43-debug/libgcrypt-1.11.0/build-aux/install-sh"
+S["MAKEINFO"]="${SHELL} '/home/fred/code/gnupg-2.2.43-debug/libgcrypt-1.11.0/build-aux/missing' makeinfo"
+S["AUTOHEADER"]="${SHELL} '/home/fred/code/gnupg-2.2.43-debug/libgcrypt-1.11.0/build-aux/missing' autoheader"
+S["AUTOMAKE"]="${SHELL} '/home/fred/code/gnupg-2.2.43-debug/libgcrypt-1.11.0/build-aux/missing' automake-1.16"
+S["AUTOCONF"]="${SHELL} '/home/fred/code/gnupg-2.2.43-debug/libgcrypt-1.11.0/build-aux/missing' autoconf"
+S["ACLOCAL"]="${SHELL} '/home/fred/code/gnupg-2.2.43-debug/libgcrypt-1.11.0/build-aux/missing' aclocal-1.16"
 S["VERSION"]="1.11.0"
 S["PACKAGE"]="libgcrypt"
 S["CYGPATH_W"]="echo"

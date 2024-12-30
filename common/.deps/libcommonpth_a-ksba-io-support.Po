@@ -74,12 +74,11 @@ libcommonpth_a-ksba-io-support.o: ksba-io-support.c \
  /usr/include/x86_64-linux-gnu/bits/timex.h \
  /usr/include/x86_64-linux-gnu/bits/types/struct_tm.h \
  /usr/include/x86_64-linux-gnu/bits/types/struct_itimerspec.h \
- /usr/include/assert.h /usr/local/include/ksba.h \
- /usr/local/include/gpg-error.h util.h /usr/local/include/gcrypt.h \
- ../common/logging.h ../common/mischelp.h ../common/w32help.h \
- ../common/argparse.h ../common/stringhelp.h \
- /usr/lib/gcc/x86_64-linux-gnu/11/include/stdint.h /usr/include/stdint.h \
- /usr/include/x86_64-linux-gnu/bits/wchar.h \
+ /usr/include/assert.h /usr/include/ksba.h /usr/local/include/gpg-error.h \
+ util.h /usr/local/include/gcrypt.h ../common/logging.h \
+ ../common/mischelp.h ../common/w32help.h ../common/argparse.h \
+ ../common/stringhelp.h /usr/lib/gcc/x86_64-linux-gnu/11/include/stdint.h \
+ /usr/include/stdint.h /usr/include/x86_64-linux-gnu/bits/wchar.h \
  /usr/include/x86_64-linux-gnu/bits/stdint-uintn.h ../common/types.h \
  /usr/include/inttypes.h ../common/mischelp.h ../common/strlist.h \
  ../common/dotlock.h ../common/utf8conv.h ../common/dynload.h \
@@ -176,7 +175,7 @@ libcommonpth_a-ksba-io-support.o: ksba-io-support.c \
 /usr/include/x86_64-linux-gnu/bits/types/struct_tm.h:
 /usr/include/x86_64-linux-gnu/bits/types/struct_itimerspec.h:
 /usr/include/assert.h:
-/usr/local/include/ksba.h:
+/usr/include/ksba.h:
 /usr/local/include/gpg-error.h:
 util.h:
 /usr/local/include/gcrypt.h:

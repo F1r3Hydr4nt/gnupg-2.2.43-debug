@@ -215,7 +215,7 @@
 /* #undef HAVE_BYTE */
 
 /* Defined if the bz2 compression library is available */
-/* #undef HAVE_BZIP2 */
+#define HAVE_BZIP2 1
 
 /* Define to 1 if you have the `canonicalize_file_name' function. */
 #define HAVE_CANONICALIZE_FILE_NAME 1
@@ -614,7 +614,7 @@
 #define HAVE_ZIP 1
 
 /* Enable GNUTLS support in http.c */
-#define HTTP_USE_GNUTLS 1
+/* #undef HTTP_USE_GNUTLS */
 
 /* Enable NTBTLS support in http.c */
 /* #undef HTTP_USE_NTBTLS */
