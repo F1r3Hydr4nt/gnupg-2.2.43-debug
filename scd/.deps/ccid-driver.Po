@@ -92,7 +92,7 @@ ccid-driver.o: ccid-driver.c /usr/include/stdc-predef.h ../config.h \
  /usr/include/x86_64-linux-gnu/bits/getopt_core.h \
  /usr/include/x86_64-linux-gnu/bits/unistd.h \
  /usr/include/x86_64-linux-gnu/bits/unistd_ext.h \
- /usr/include/linux/close_range.h /usr/include/npth.h \
+ /usr/include/linux/close_range.h /usr/local/include/npth.h \
  /usr/include/x86_64-linux-gnu/sys/wait.h /usr/include/signal.h \
  /usr/include/x86_64-linux-gnu/bits/signum-generic.h \
  /usr/include/x86_64-linux-gnu/bits/signum-arch.h \
@@ -156,7 +156,7 @@ ccid-driver.o: ccid-driver.c /usr/include/stdc-predef.h ../config.h \
  /usr/include/x86_64-linux-gnu/bits/dl_find_object.h \
  ../common/../common/fwddecl.h ../common/../common/utilproto.h \
  ../common/gettime.h ../common/sysutils.h app-common.h \
- /usr/include/ksba.h iso7816.h ccid-driver.h
+ /usr/local/include/ksba.h iso7816.h ccid-driver.h
 /usr/include/stdc-predef.h:
 ../config.h:
 /usr/include/errno.h:
@@ -270,7 +270,7 @@ ccid-driver.o: ccid-driver.c /usr/include/stdc-predef.h ../config.h \
 /usr/include/x86_64-linux-gnu/bits/unistd.h:
 /usr/include/x86_64-linux-gnu/bits/unistd_ext.h:
 /usr/include/linux/close_range.h:
-/usr/include/npth.h:
+/usr/local/include/npth.h:
 /usr/include/x86_64-linux-gnu/sys/wait.h:
 /usr/include/signal.h:
 /usr/include/x86_64-linux-gnu/bits/signum-generic.h:
@@ -351,6 +351,6 @@ scdaemon.h:
 ../common/gettime.h:
 ../common/sysutils.h:
 app-common.h:
-/usr/include/ksba.h:
+/usr/local/include/ksba.h:
 iso7816.h:
 ccid-driver.h:

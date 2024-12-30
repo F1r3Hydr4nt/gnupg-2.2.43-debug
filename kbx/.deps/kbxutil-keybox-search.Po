@@ -98,7 +98,7 @@ kbxutil-keybox-search.o: keybox-search.c /usr/include/stdc-predef.h \
  /usr/include/x86_64-linux-gnu/bits/statx-generic.h \
  /usr/include/x86_64-linux-gnu/bits/types/struct_statx_timestamp.h \
  /usr/include/x86_64-linux-gnu/bits/types/struct_statx.h \
- keybox-search-desc.h /usr/include/ksba.h ../common/host2net.h \
+ keybox-search-desc.h /usr/local/include/ksba.h ../common/host2net.h \
  ../common/types.h ../common/mbox-util.h
 /usr/include/stdc-predef.h:
 ../config.h:
@@ -229,7 +229,7 @@ keybox.h:
 /usr/include/x86_64-linux-gnu/bits/types/struct_statx_timestamp.h:
 /usr/include/x86_64-linux-gnu/bits/types/struct_statx.h:
 keybox-search-desc.h:
-/usr/include/ksba.h:
+/usr/local/include/ksba.h:
 ../common/host2net.h:
 ../common/types.h:
 ../common/mbox-util.h:

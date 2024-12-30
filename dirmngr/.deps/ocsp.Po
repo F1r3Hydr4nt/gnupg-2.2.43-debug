@@ -63,7 +63,7 @@ ocsp.o: ocsp.c /usr/include/stdc-predef.h ../config.h \
  /usr/local/include/gcrypt.h /usr/include/string.h /usr/include/strings.h \
  /usr/include/x86_64-linux-gnu/bits/strings_fortified.h \
  /usr/include/x86_64-linux-gnu/bits/string_fortified.h \
- /usr/include/ksba.h ../common/util.h ../common/../common/logging.h \
+ /usr/local/include/ksba.h ../common/util.h ../common/../common/logging.h \
  ../common/../common/mischelp.h ../common/../common/w32help.h \
  ../common/../common/argparse.h ../common/../common/stringhelp.h \
  /usr/lib/gcc/x86_64-linux-gnu/11/include/stdint.h /usr/include/stdint.h \
@@ -199,7 +199,7 @@ dirmngr-err.h:
 /usr/include/strings.h:
 /usr/include/x86_64-linux-gnu/bits/strings_fortified.h:
 /usr/include/x86_64-linux-gnu/bits/string_fortified.h:
-/usr/include/ksba.h:
+/usr/local/include/ksba.h:
 ../common/util.h:
 ../common/../common/logging.h:
 ../common/../common/mischelp.h:

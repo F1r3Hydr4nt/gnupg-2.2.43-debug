@@ -64,8 +64,9 @@ certcache.o: certcache.c /usr/include/stdc-predef.h ../config.h \
  /usr/include/x86_64-linux-gnu/bits/local_lim.h \
  /usr/include/linux/limits.h \
  /usr/include/x86_64-linux-gnu/bits/pthread_stack_min-dynamic.h \
- /usr/include/x86_64-linux-gnu/bits/dirent_ext.h /usr/include/npth.h \
- /usr/include/x86_64-linux-gnu/sys/wait.h /usr/include/signal.h \
+ /usr/include/x86_64-linux-gnu/bits/dirent_ext.h \
+ /usr/local/include/npth.h /usr/include/x86_64-linux-gnu/sys/wait.h \
+ /usr/include/signal.h \
  /usr/include/x86_64-linux-gnu/bits/signum-generic.h \
  /usr/include/x86_64-linux-gnu/bits/signum-arch.h \
  /usr/include/x86_64-linux-gnu/bits/types/sig_atomic_t.h \
@@ -126,7 +127,7 @@ certcache.o: certcache.c /usr/include/stdc-predef.h ../config.h \
  /usr/local/include/gcrypt.h /usr/include/string.h /usr/include/strings.h \
  /usr/include/x86_64-linux-gnu/bits/strings_fortified.h \
  /usr/include/x86_64-linux-gnu/bits/string_fortified.h \
- /usr/include/ksba.h ../common/util.h ../common/../common/logging.h \
+ /usr/local/include/ksba.h ../common/util.h ../common/../common/logging.h \
  ../common/../common/mischelp.h ../common/../common/w32help.h \
  ../common/../common/argparse.h ../common/../common/stringhelp.h \
  /usr/lib/gcc/x86_64-linux-gnu/11/include/stdint.h /usr/include/stdint.h \
@@ -231,7 +232,7 @@ certcache.o: certcache.c /usr/include/stdc-predef.h ../config.h \
 /usr/include/linux/limits.h:
 /usr/include/x86_64-linux-gnu/bits/pthread_stack_min-dynamic.h:
 /usr/include/x86_64-linux-gnu/bits/dirent_ext.h:
-/usr/include/npth.h:
+/usr/local/include/npth.h:
 /usr/include/x86_64-linux-gnu/sys/wait.h:
 /usr/include/signal.h:
 /usr/include/x86_64-linux-gnu/bits/signum-generic.h:
@@ -303,7 +304,7 @@ dirmngr-err.h:
 /usr/include/strings.h:
 /usr/include/x86_64-linux-gnu/bits/strings_fortified.h:
 /usr/include/x86_64-linux-gnu/bits/string_fortified.h:
-/usr/include/ksba.h:
+/usr/local/include/ksba.h:
 ../common/util.h:
 ../common/../common/logging.h:
 ../common/../common/mischelp.h:

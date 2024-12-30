@@ -90,7 +90,7 @@ gpg_agent-findkey.o: findkey.c /usr/include/stdc-predef.h ../config.h \
  /usr/include/x86_64-linux-gnu/bits/statx-generic.h \
  /usr/include/x86_64-linux-gnu/bits/types/struct_statx_timestamp.h \
  /usr/include/x86_64-linux-gnu/bits/types/struct_statx.h \
- /usr/include/npth.h /usr/include/x86_64-linux-gnu/sys/wait.h \
+ /usr/local/include/npth.h /usr/include/x86_64-linux-gnu/sys/wait.h \
  /usr/include/signal.h \
  /usr/include/x86_64-linux-gnu/bits/signum-generic.h \
  /usr/include/x86_64-linux-gnu/bits/signum-arch.h \
@@ -261,7 +261,7 @@ gpg_agent-findkey.o: findkey.c /usr/include/stdc-predef.h ../config.h \
 /usr/include/x86_64-linux-gnu/bits/statx-generic.h:
 /usr/include/x86_64-linux-gnu/bits/types/struct_statx_timestamp.h:
 /usr/include/x86_64-linux-gnu/bits/types/struct_statx.h:
-/usr/include/npth.h:
+/usr/local/include/npth.h:
 /usr/include/x86_64-linux-gnu/sys/wait.h:
 /usr/include/signal.h:
 /usr/include/x86_64-linux-gnu/bits/signum-generic.h:

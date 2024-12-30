@@ -534,13 +534,25 @@ passphrase_to_dek (int cipher_algo, STRING2KEY *s2k,
     log_info("DEK Information:\n");
     log_info("Algorithm: %d\n", dek->algo);
     log_info("Key Length: %d bytes\n", dek->keylen);
-    log_info("Algorithm Info Printed: %s\n", dek->algo_info_printed ? "Yes" : "No");
-    log_info("Use AEAD: %d\n", dek->use_aead);
-    log_info("Use MDC: %s\n", dek->use_mdc ? "Yes" : "No");
-    log_info("Symmetric: %s\n", dek->symmetric ? "Yes" : "No");
-    log_hexdump( dek->key, dek->keylen);
-    log_info("S2K Cache ID: %s\n", dek->s2k_cacheid);
-  return dek;
+    // log_info("Algorithm Info Printed: %s\n", dek->algo_info_printed ? "Yes" : "No");
+    // log_info("Use AEAD: %d\n", dek->use_aead);
+    // log_info("Use MDC: %s\n", dek->use_mdc ? "Yes" : "No");
+    // log_info("Symmetric: %s\n", dek->symmetric ? "Yes" : "No");
+    // log_hexdump( dek->key, dek->keylen);
+    // log_info("S2K Cache ID: %s\n", dek->s2k_cacheid);
+    printf("Key: ");
+    for (int i = 0; i < dek->keylen; i++)
+    {
+      printf("%02x", dek->key[i]);
+    }
+    printf("\n");
+    printf("SALT: ");
+    for (int i = 0; i < 8; i++)
+    {
+      printf("%02x", s2k->salt[i]);
+    }
+    printf("\n");
+    return dek;
 }
 
 

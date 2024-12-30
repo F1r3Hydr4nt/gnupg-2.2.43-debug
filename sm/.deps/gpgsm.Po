@@ -77,10 +77,11 @@ gpgsm.o: gpgsm.c /usr/include/stdc-predef.h ../config.h \
  /usr/include/linux/falloc.h /usr/include/x86_64-linux-gnu/bits/stat.h \
  /usr/include/x86_64-linux-gnu/bits/struct_stat.h \
  /usr/include/x86_64-linux-gnu/bits/fcntl2.h gpgsm.h \
- /usr/local/include/gpg-error.h /usr/include/ksba.h ../common/util.h \
- /usr/local/include/gcrypt.h ../common/../common/logging.h \
- ../common/../common/mischelp.h ../common/../common/w32help.h \
- ../common/../common/argparse.h ../common/../common/stringhelp.h \
+ /usr/local/include/gpg-error.h /usr/local/include/ksba.h \
+ ../common/util.h /usr/local/include/gcrypt.h \
+ ../common/../common/logging.h ../common/../common/mischelp.h \
+ ../common/../common/w32help.h ../common/../common/argparse.h \
+ ../common/../common/stringhelp.h \
  /usr/lib/gcc/x86_64-linux-gnu/11/include/stdint.h /usr/include/stdint.h \
  /usr/include/x86_64-linux-gnu/bits/wchar.h \
  /usr/include/x86_64-linux-gnu/bits/stdint-uintn.h \
@@ -222,7 +223,7 @@ gpgsm.o: gpgsm.c /usr/include/stdc-predef.h ../config.h \
 /usr/include/x86_64-linux-gnu/bits/fcntl2.h:
 gpgsm.h:
 /usr/local/include/gpg-error.h:
-/usr/include/ksba.h:
+/usr/local/include/ksba.h:
 ../common/util.h:
 /usr/local/include/gcrypt.h:
 ../common/../common/logging.h:

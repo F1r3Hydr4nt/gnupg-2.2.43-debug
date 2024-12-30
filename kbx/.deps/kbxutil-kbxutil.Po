@@ -116,8 +116,8 @@ kbxutil-kbxutil.o: kbxutil.c /usr/include/stdc-predef.h ../config.h \
  /usr/include/x86_64-linux-gnu/bits/types/struct_tm.h \
  /usr/include/x86_64-linux-gnu/bits/types/struct_itimerspec.h keybox.h \
  ../common/iobuf.h ../common/../common/types.h \
- ../common/../common/sysutils.h keybox-search-desc.h /usr/include/ksba.h \
- ../common/init.h
+ ../common/../common/sysutils.h keybox-search-desc.h \
+ /usr/local/include/ksba.h ../common/init.h
 /usr/include/stdc-predef.h:
 ../config.h:
 /usr/include/errno.h:
@@ -275,5 +275,5 @@ keybox.h:
 ../common/../common/types.h:
 ../common/../common/sysutils.h:
 keybox-search-desc.h:
-/usr/include/ksba.h:
+/usr/local/include/ksba.h:
 ../common/init.h:

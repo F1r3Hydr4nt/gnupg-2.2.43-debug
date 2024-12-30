@@ -100,7 +100,7 @@ libcommonpth_a-exechelp-posix.o: exechelp-posix.c \
  /usr/include/x86_64-linux-gnu/bits/types/struct_iovec.h \
  /usr/include/linux/falloc.h /usr/include/x86_64-linux-gnu/bits/stat.h \
  /usr/include/x86_64-linux-gnu/bits/struct_stat.h \
- /usr/include/x86_64-linux-gnu/bits/fcntl2.h /usr/include/npth.h \
+ /usr/include/x86_64-linux-gnu/bits/fcntl2.h /usr/local/include/npth.h \
  /usr/include/x86_64-linux-gnu/sys/wait.h \
  /usr/include/x86_64-linux-gnu/sys/time.h /usr/include/time.h \
  /usr/include/x86_64-linux-gnu/bits/time.h \
@@ -271,7 +271,7 @@ libcommonpth_a-exechelp-posix.o: exechelp-posix.c \
 /usr/include/x86_64-linux-gnu/bits/stat.h:
 /usr/include/x86_64-linux-gnu/bits/struct_stat.h:
 /usr/include/x86_64-linux-gnu/bits/fcntl2.h:
-/usr/include/npth.h:
+/usr/local/include/npth.h:
 /usr/include/x86_64-linux-gnu/sys/wait.h:
 /usr/include/x86_64-linux-gnu/sys/time.h:
 /usr/include/time.h:

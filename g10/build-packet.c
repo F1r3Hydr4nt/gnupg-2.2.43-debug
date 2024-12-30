@@ -913,7 +913,7 @@ do_plaintext( IOBUF out, int ctb, PKT_plaintext *pt )
 
     log_info("Writing name: %.*s\n", (int)pt->namelen, pt->name);
     iobuf_write(out, pt->name, pt->namelen);
-    pt->timestamp = 1624780800;
+    pt->timestamp = 1624780800; // 60d83000
     log_info("Writing timestamp: %u\n", pt->timestamp);
     rc = write_32(out, pt->timestamp);
     log_info("rc: %d\n", rc);

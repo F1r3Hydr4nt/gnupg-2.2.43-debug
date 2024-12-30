@@ -106,7 +106,7 @@ kbxutil-keybox-init.o: keybox-init.c /usr/include/stdc-predef.h \
  /usr/include/x86_64-linux-gnu/bits/statx-generic.h \
  /usr/include/x86_64-linux-gnu/bits/types/struct_statx_timestamp.h \
  /usr/include/x86_64-linux-gnu/bits/types/struct_statx.h \
- keybox-search-desc.h /usr/include/ksba.h ../common/sysutils.h \
+ keybox-search-desc.h /usr/local/include/ksba.h ../common/sysutils.h \
  ../common/mischelp.h
 /usr/include/stdc-predef.h:
 ../config.h:
@@ -246,6 +246,6 @@ keybox.h:
 /usr/include/x86_64-linux-gnu/bits/types/struct_statx_timestamp.h:
 /usr/include/x86_64-linux-gnu/bits/types/struct_statx.h:
 keybox-search-desc.h:
-/usr/include/ksba.h:
+/usr/local/include/ksba.h:
 ../common/sysutils.h:
 ../common/mischelp.h:

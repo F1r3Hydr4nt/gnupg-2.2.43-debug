@@ -137,7 +137,7 @@ dns-stuff.o: dns-stuff.c /usr/include/stdc-predef.h ../config.h \
  /usr/include/x86_64-linux-gnu/bits/types/struct_itimerspec.h \
  /usr/include/poll.h /usr/include/x86_64-linux-gnu/sys/poll.h \
  /usr/include/x86_64-linux-gnu/bits/poll.h \
- /usr/include/x86_64-linux-gnu/bits/poll2.h /usr/include/npth.h \
+ /usr/include/x86_64-linux-gnu/bits/poll2.h /usr/local/include/npth.h \
  /usr/include/x86_64-linux-gnu/sys/wait.h \
  /usr/include/x86_64-linux-gnu/bits/waitflags.h \
  /usr/include/x86_64-linux-gnu/bits/waitstatus.h \
@@ -324,7 +324,7 @@ dns.h:
 /usr/include/x86_64-linux-gnu/sys/poll.h:
 /usr/include/x86_64-linux-gnu/bits/poll.h:
 /usr/include/x86_64-linux-gnu/bits/poll2.h:
-/usr/include/npth.h:
+/usr/local/include/npth.h:
 /usr/include/x86_64-linux-gnu/sys/wait.h:
 /usr/include/x86_64-linux-gnu/bits/waitflags.h:
 /usr/include/x86_64-linux-gnu/bits/waitstatus.h:

@@ -129,7 +129,7 @@ dirmngr.o: dirmngr.c /usr/include/stdc-predef.h ../config.h \
  /usr/lib/gcc/x86_64-linux-gnu/11/include/stdint.h /usr/include/stdint.h \
  /usr/include/x86_64-linux-gnu/bits/wchar.h \
  /usr/include/x86_64-linux-gnu/bits/stdint-uintn.h \
- /usr/include/x86_64-linux-gnu/bits/inotify.h /usr/include/npth.h \
+ /usr/include/x86_64-linux-gnu/bits/inotify.h /usr/local/include/npth.h \
  /usr/include/x86_64-linux-gnu/sys/wait.h \
  /usr/include/x86_64-linux-gnu/sys/time.h /usr/include/pthread.h \
  /usr/include/sched.h /usr/include/x86_64-linux-gnu/bits/sched.h \
@@ -139,7 +139,7 @@ dirmngr.o: dirmngr.c /usr/include/stdc-predef.h ../config.h \
  /usr/include/x86_64-linux-gnu/bits/types/struct___jmp_buf_tag.h \
  /usr/include/x86_64-linux-gnu/bits/pthread_stack_min-dynamic.h \
  dirmngr-err.h /usr/local/include/gpg-error.h dirmngr.h dirmngr-err.h \
- /usr/local/include/gcrypt.h /usr/include/ksba.h ../common/util.h \
+ /usr/local/include/gcrypt.h /usr/local/include/ksba.h ../common/util.h \
  ../common/../common/logging.h ../common/../common/mischelp.h \
  ../common/../common/w32help.h ../common/../common/argparse.h \
  ../common/../common/stringhelp.h ../common/../common/types.h \
@@ -308,7 +308,7 @@ dirmngr.o: dirmngr.c /usr/include/stdc-predef.h ../config.h \
 /usr/include/x86_64-linux-gnu/bits/wchar.h:
 /usr/include/x86_64-linux-gnu/bits/stdint-uintn.h:
 /usr/include/x86_64-linux-gnu/bits/inotify.h:
-/usr/include/npth.h:
+/usr/local/include/npth.h:
 /usr/include/x86_64-linux-gnu/sys/wait.h:
 /usr/include/x86_64-linux-gnu/sys/time.h:
 /usr/include/pthread.h:
@@ -324,7 +324,7 @@ dirmngr-err.h:
 dirmngr.h:
 dirmngr-err.h:
 /usr/local/include/gcrypt.h:
-/usr/include/ksba.h:
+/usr/local/include/ksba.h:
 ../common/util.h:
 ../common/../common/logging.h:
 ../common/../common/mischelp.h:

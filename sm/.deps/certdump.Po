@@ -77,7 +77,7 @@ certdump.o: certdump.c /usr/include/stdc-predef.h ../config.h \
  /usr/include/assert.h /usr/include/locale.h \
  /usr/include/x86_64-linux-gnu/bits/locale.h /usr/include/langinfo.h \
  /usr/include/nl_types.h gpgsm.h /usr/local/include/gpg-error.h \
- /usr/include/ksba.h ../common/util.h /usr/local/include/gcrypt.h \
+ /usr/local/include/ksba.h ../common/util.h /usr/local/include/gcrypt.h \
  ../common/../common/logging.h ../common/../common/mischelp.h \
  ../common/../common/w32help.h ../common/../common/argparse.h \
  ../common/../common/stringhelp.h \
@@ -191,7 +191,7 @@ certdump.o: certdump.c /usr/include/stdc-predef.h ../config.h \
 /usr/include/nl_types.h:
 gpgsm.h:
 /usr/local/include/gpg-error.h:
-/usr/include/ksba.h:
+/usr/local/include/ksba.h:
 ../common/util.h:
 /usr/local/include/gcrypt.h:
 ../common/../common/logging.h:

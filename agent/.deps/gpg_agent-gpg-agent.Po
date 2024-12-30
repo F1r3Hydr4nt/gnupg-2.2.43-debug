@@ -124,8 +124,8 @@ gpg_agent-gpg-agent.o: gpg-agent.c /usr/include/stdc-predef.h ../config.h \
  /usr/include/x86_64-linux-gnu/bits/ss_flags.h \
  /usr/include/x86_64-linux-gnu/bits/types/struct_sigstack.h \
  /usr/include/x86_64-linux-gnu/bits/sigthread.h \
- /usr/include/x86_64-linux-gnu/bits/signal_ext.h /usr/include/npth.h \
- /usr/include/x86_64-linux-gnu/sys/wait.h \
+ /usr/include/x86_64-linux-gnu/bits/signal_ext.h \
+ /usr/local/include/npth.h /usr/include/x86_64-linux-gnu/sys/wait.h \
  /usr/include/x86_64-linux-gnu/sys/time.h /usr/include/pthread.h \
  /usr/include/sched.h /usr/include/x86_64-linux-gnu/bits/sched.h \
  /usr/include/x86_64-linux-gnu/bits/types/struct_sched_param.h \
@@ -300,7 +300,7 @@ gpg_agent-gpg-agent.o: gpg-agent.c /usr/include/stdc-predef.h ../config.h \
 /usr/include/x86_64-linux-gnu/bits/types/struct_sigstack.h:
 /usr/include/x86_64-linux-gnu/bits/sigthread.h:
 /usr/include/x86_64-linux-gnu/bits/signal_ext.h:
-/usr/include/npth.h:
+/usr/local/include/npth.h:
 /usr/include/x86_64-linux-gnu/sys/wait.h:
 /usr/include/x86_64-linux-gnu/sys/time.h:
 /usr/include/pthread.h:

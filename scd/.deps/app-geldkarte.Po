@@ -98,7 +98,7 @@ app-geldkarte.o: app-geldkarte.c /usr/include/stdc-predef.h ../config.h \
  /usr/include/x86_64-linux-gnu/bits/statx-generic.h \
  /usr/include/x86_64-linux-gnu/bits/types/struct_statx_timestamp.h \
  /usr/include/x86_64-linux-gnu/bits/types/struct_statx.h app-common.h \
- /usr/include/npth.h /usr/include/x86_64-linux-gnu/sys/wait.h \
+ /usr/local/include/npth.h /usr/include/x86_64-linux-gnu/sys/wait.h \
  /usr/include/signal.h \
  /usr/include/x86_64-linux-gnu/bits/signum-generic.h \
  /usr/include/x86_64-linux-gnu/bits/signum-arch.h \
@@ -147,7 +147,7 @@ app-geldkarte.o: app-geldkarte.c /usr/include/stdc-predef.h ../config.h \
  /usr/include/x86_64-linux-gnu/bits/setjmp.h \
  /usr/include/x86_64-linux-gnu/bits/types/struct___jmp_buf_tag.h \
  /usr/include/x86_64-linux-gnu/bits/pthread_stack_min-dynamic.h \
- /usr/include/ksba.h ../common/i18n.h /usr/include/locale.h \
+ /usr/local/include/ksba.h ../common/i18n.h /usr/include/locale.h \
  /usr/include/x86_64-linux-gnu/bits/locale.h /usr/include/libintl.h \
  iso7816.h ../common/tlv.h ../common/membuf.h ../common/mischelp.h
 /usr/include/stdc-predef.h:
@@ -277,7 +277,7 @@ scdaemon.h:
 /usr/include/x86_64-linux-gnu/bits/types/struct_statx_timestamp.h:
 /usr/include/x86_64-linux-gnu/bits/types/struct_statx.h:
 app-common.h:
-/usr/include/npth.h:
+/usr/local/include/npth.h:
 /usr/include/x86_64-linux-gnu/sys/wait.h:
 /usr/include/signal.h:
 /usr/include/x86_64-linux-gnu/bits/signum-generic.h:
@@ -330,7 +330,7 @@ app-common.h:
 /usr/include/x86_64-linux-gnu/bits/setjmp.h:
 /usr/include/x86_64-linux-gnu/bits/types/struct___jmp_buf_tag.h:
 /usr/include/x86_64-linux-gnu/bits/pthread_stack_min-dynamic.h:
-/usr/include/ksba.h:
+/usr/local/include/ksba.h:
 ../common/i18n.h:
 /usr/include/locale.h:
 /usr/include/x86_64-linux-gnu/bits/locale.h:

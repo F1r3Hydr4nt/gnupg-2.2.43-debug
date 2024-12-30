@@ -103,7 +103,7 @@ http.o: http.c /usr/include/stdc-predef.h ../config.h \
  /usr/include/netdb.h /usr/include/rpc/netdb.h \
  /usr/include/x86_64-linux-gnu/bits/types/sigevent_t.h \
  /usr/include/x86_64-linux-gnu/bits/types/__sigval_t.h \
- /usr/include/x86_64-linux-gnu/bits/netdb.h /usr/include/npth.h \
+ /usr/include/x86_64-linux-gnu/bits/netdb.h /usr/local/include/npth.h \
  /usr/include/x86_64-linux-gnu/sys/wait.h /usr/include/signal.h \
  /usr/include/x86_64-linux-gnu/bits/signum-generic.h \
  /usr/include/x86_64-linux-gnu/bits/signum-arch.h \
@@ -276,7 +276,7 @@ http.o: http.c /usr/include/stdc-predef.h ../config.h \
 /usr/include/x86_64-linux-gnu/bits/types/sigevent_t.h:
 /usr/include/x86_64-linux-gnu/bits/types/__sigval_t.h:
 /usr/include/x86_64-linux-gnu/bits/netdb.h:
-/usr/include/npth.h:
+/usr/local/include/npth.h:
 /usr/include/x86_64-linux-gnu/sys/wait.h:
 /usr/include/signal.h:
 /usr/include/x86_64-linux-gnu/bits/signum-generic.h:
